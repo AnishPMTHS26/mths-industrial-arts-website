@@ -1,0 +1,665 @@
+/* ═══════════════════════════════════════════════════════════════════
+   MTHS Industrial Arts Department — Shared Stylesheet
+   ─────────────────────────────────────────────────────────────────
+   FILE: style.css
+   USED BY: index.html (Home) and about.html (About Us)
+   
+   DESIGN SYSTEM:
+   - Color scheme: Navy blue (#0c1a2e) + Gold (#d4a843) + White (#f7f6f2)
+   - Heading font: Barlow Condensed (Google Fonts) — bold, industrial feel
+   - Body font: DM Sans (Google Fonts) — clean, modern readability
+   - Style: Industrial-utilitarian aesthetic inspired by engineering blueprints
+   
+   STRUCTURE:
+   1. CSS Variables (design tokens — colors, fonts, shadows, radii)
+   2. Reset & base typography
+   3. Navigation bar (fixed top, responsive hamburger)
+   4. Buttons (primary gold, outline variants)
+   5. Hero section (image carousel + welcome text)
+   6. Events carousel (scrolling event cards)
+   7. Testimonials carousel (student voice cards)
+   8. About page sections (PLTW, pathways, faculty, courses, clubs)
+   9. Page header (subpage banner)
+   10. Animations (fadeUp on load)
+   11. Responsive breakpoints (900px tablet, 700px mobile)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────
+   CSS VARIABLES (Design Tokens)
+   All colors, fonts, shadows, and radii are defined here.
+   To change the site's color scheme, edit these values.
+   ───────────────────────────────────────────────────────────────── */
+:root {
+    /* PRIMARY COLORS — Navy blues (backgrounds, nav, hero) */
+    --navy:        #0c1a2e;
+    --navy-mid:    #132240;
+    --navy-light:  #1b2f50;
+    --navy-surface:#1e344a;
+    /* ACCENT COLORS — Gold (highlights, buttons, borders, headings) */
+    --gold:        #d4a843;
+    --gold-dark:   #b58e2f;
+    --gold-light:  #e8c76a;
+    --gold-pale:   #f5e6c0;
+    /* NEUTRAL COLORS — Whites, creams, grays (backgrounds, text, borders) */
+    --white:       #f7f6f2;
+    --white-pure:  #ffffff;
+    --cream:       #faf8f3;
+    --gray-100:    #efeee8;
+    --gray-200:    #dddcd4;
+    --gray-300:    #bcbab0;
+    --gray-400:    #8a8778;
+    --gray-500:    #5e5c52;
+    --text:        #1a1a18;
+    --text-muted:  #4a4a44;
+    /* PATHWAY ACCENT COLORS — Used for course cards and pathway indicators */
+    --accent-blue:   #3b82f6;   /* PLTW Engineering */
+    --accent-purple: #8b5cf6; /* Computer Science */
+    --accent-green:  #22c55e;  /* Materials & Construction */
+    --accent-orange: #f59e0b; /* Video & Media */
+    --accent-red:    #ef4444;    /* Used for faculty avatar borders */
+    /* TYPOGRAPHY — loaded from Google Fonts in HTML <head> */
+    --font-heading: 'Barlow Condensed', 'Arial Narrow', sans-serif; /* Headings, nav, badges */
+    --font-body:    'DM Sans', 'Segoe UI', sans-serif;             /* Body text, paragraphs */
+    /* SHADOWS — layered depth for cards, nav, hero */
+    --shadow-sm:  0 1px 3px rgba(12,26,46,.06);
+    --shadow-md:  0 4px 16px rgba(12,26,46,.09);
+    --shadow-lg:  0 8px 32px rgba(12,26,46,.13);
+    --shadow-glow:0 0 30px rgba(212,168,67,.15);
+    /* BORDER RADII — consistent rounding across components */
+    --radius-sm:  6px;
+    --radius-md:  10px;
+    --radius-lg:  16px;
+    /* EASING — smooth Material Design-style transitions */
+    --ease: cubic-bezier(.4,0,.2,1);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   CSS RESET & BASE STYLES
+   Removes default browser margins/padding, sets box-sizing,
+   and establishes base typography for the entire site.
+   ───────────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:var(--font-body);color:var(--text);background:var(--white);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit}
+
+/* Container constrains content to max 1180px and centers it horizontally */
+.container{max-width:1180px;margin:0 auto;padding:0 1.5rem}
+
+/* All headings use Barlow Condensed for the industrial feel */
+h1,h2,h3,h4{font-family:var(--font-heading);font-weight:700;line-height:1.15;letter-spacing:.01em}
+
+/* Section title: centered uppercase heading with a gold underline bar.
+   Used at the top of every major section (Events, Testimonials, PLTW, etc.)
+   clamp() makes the font size responsive: min 1.8rem, preferred 3.5vw, max 2.6rem */
+.section-title{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--navy);text-align:center;margin-bottom:.5rem}
+.section-title::after{content:'';display:block;width:56px;height:3.5px;background:var(--gold);margin:.7rem auto 0;border-radius:2px}
+.section-desc{text-align:center;color:var(--text-muted);font-size:1rem;max-width:580px;margin:0 auto 2.5rem}
+
+/* ─────────────────────────────────────────────────────────────────
+   NAVIGATION BAR
+   Fixed to top of viewport (position:fixed). Navy background with
+   gold bottom border. Contains: logo/brand (left), nav links (right),
+   and a hamburger button (hidden on desktop, visible on mobile).
+   
+   .scrolled class is added by JavaScript when user scrolls past 40px,
+   which adds a shadow to make the nav feel "elevated."
+   ───────────────────────────────────────────────────────────────── */
+.main-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--navy);border-bottom:2px solid var(--gold);transition:box-shadow .3s var(--ease)}
+.main-nav.scrolled{box-shadow:var(--shadow-lg)}
+.nav-inner{max-width:1180px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-brand{display:flex;align-items:center;gap:.55rem;color:var(--white);font-family:var(--font-heading);font-size:1.25rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+/* The gear SVG in the logo spins continuously (20s per rotation) */
+.nav-gear{width:32px;height:32px;animation:spin 20s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.nav-links{display:flex;gap:.15rem}
+.nav-link{color:var(--gray-300);font-family:var(--font-heading);font-size:.88rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;padding:.45rem .9rem;border-radius:var(--radius-sm);transition:all .25s var(--ease)}
+.nav-link:hover,.nav-link.active{color:var(--gold);background:rgba(212,168,67,.08)}
+
+/* HAMBURGER MENU — hidden by default (display:none).
+   Shown on mobile via @media(max-width:700px).
+   Three <span> bars animate into an X when .open class is toggled by JS. */
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+.hamburger span{width:24px;height:2.5px;background:var(--gold);border-radius:2px;transition:all .25s var(--ease)}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* ─────────────────────────────────────────────────────────────────
+   BUTTONS
+   Three variants used across the site:
+   .btn-primary  — solid gold background, navy text (main CTA)
+   .btn-outline  — transparent with gold border (secondary CTA, dark bg)
+   .btn-outline-dark — transparent with navy border (secondary CTA, light bg)
+   All buttons lift 2px on hover with a subtle shadow/glow.
+   ───────────────────────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.6rem;font-family:var(--font-heading);font-size:.9rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;border-radius:var(--radius-sm);transition:all .25s var(--ease);cursor:pointer;border:2px solid transparent}
+.btn-primary{background:var(--gold);color:var(--navy)}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:var(--shadow-glow)}
+.btn-outline{border-color:var(--gold);color:var(--gold);background:transparent}
+.btn-outline:hover{background:rgba(212,168,67,.1);transform:translateY(-2px)}
+.btn-outline-dark{border-color:var(--navy);color:var(--navy);background:transparent}
+.btn-outline-dark:hover{background:var(--navy);color:var(--gold)}
+
+/* ─────────────────────────────────────────────────────────────────
+   HERO SECTION (index.html only)
+   The main landing area visitors see first. Contains:
+   - Left: Image carousel (10 placeholder slides, auto-rotates every 4s)
+   - Right: Welcome heading + blurb + CTA buttons
+   
+   Layout uses CSS Grid with a 1.2fr/1fr split to give the carousel
+   slightly more space. Navy background with a subtle blueprint-grid
+   texture created via the ::before pseudo-element.
+   ───────────────────────────────────────────────────────────────── */
+.hero{position:relative;background:var(--navy);padding:96px 0 4.5rem;overflow:hidden;min-height:0}
+
+/* Blueprint grid texture — faint gold lines at 40px intervals, purely decorative */
+.hero::before{content:'';position:absolute;inset:0;background-image:
+    linear-gradient(rgba(212,168,67,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,168,67,.03) 1px, transparent 1px);
+    background-size:40px 40px;pointer-events:none}
+
+/* Grid layout: 1.2fr (carousel) vs 1fr (text) = ~55/45 width split */
+.hero-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:2.5rem;align-items:center;position:relative;z-index:2}
+
+/* Left column: stacks the carousel and the navigation dots vertically */
+.hero-carousel-col{display:flex;flex-direction:column;gap:.6rem}
+
+/* IMAGE CAROUSEL
+   Uses the padding-bottom aspect ratio trick: height:0 + padding-bottom:56%
+   makes the box 56% as tall as it is wide (roughly 16:9).
+   max-height:340px prevents it from getting too tall on wide screens.
+   The carousel-track is absolutely positioned inside and holds all slides
+   in a horizontal row — JS moves it with translateX to show each slide. */
+.carousel-wrapper{position:relative;width:100%;height:0;padding-bottom:56%;border-radius:var(--radius-lg);overflow:hidden;border:2px solid rgba(212,168,67,.18);box-shadow:0 8px 40px rgba(0,0,0,.35),var(--shadow-glow);max-height:340px}
+
+.carousel-track{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;transition:transform .6s var(--ease)}
+.carousel-slide{min-width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden}
+
+/* PLACEHOLDER SLIDES — these gradient boxes will be replaced with
+   real photos. Each slide-N class has a unique dark gradient background.
+   To replace with images: add <img src="photo.jpg"> inside carousel-slide
+   and remove the slide-placeholder div. */
+.slide-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--white);text-align:center;padding:1.5rem}
+.slide-placeholder .slide-number{font-family:var(--font-heading);font-size:3.5rem;font-weight:800;opacity:.12;line-height:1}
+.slide-placeholder .slide-label{font-family:var(--font-heading);font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;opacity:.55}
+.slide-placeholder .slide-caption{font-size:.75rem;opacity:.35;max-width:220px}
+
+.slide-1{background:linear-gradient(135deg,#1a3a5c,#0d2240)}
+.slide-2{background:linear-gradient(135deg,#2a1a3c,#140d2a)}
+.slide-3{background:linear-gradient(135deg,#1a3c2a,#0d2a18)}
+.slide-4{background:linear-gradient(135deg,#3c2a0d,#2a1a05)}
+.slide-5{background:linear-gradient(135deg,#1a2a3c,#0d1828)}
+.slide-6{background:linear-gradient(135deg,#2a0d1a,#1a0510)}
+.slide-7{background:linear-gradient(135deg,#0d2a2a,#051a1a)}
+.slide-8{background:linear-gradient(135deg,#3c3a0d,#2a2805)}
+.slide-9{background:linear-gradient(135deg,#1a1a3c,#0d0d28)}
+.slide-10{background:linear-gradient(135deg,#2a3c1a,#182a0d)}
+
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:rgba(12,26,46,.7);border:1.5px solid var(--gold);color:var(--gold);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s var(--ease);z-index:5;backdrop-filter:blur(4px)}
+.carousel-btn:hover{background:var(--gold);color:var(--navy)}
+.carousel-prev{left:10px}
+.carousel-next{right:10px}
+
+.carousel-dots{display:flex;justify-content:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(212,168,67,.2);border:1.5px solid rgba(212,168,67,.4);cursor:pointer;transition:all .25s var(--ease)}
+.dot.active{background:var(--gold);border-color:var(--gold);transform:scale(1.25)}
+
+/* ─── HERO CONTENT (right side) ─── */
+.hero-content{color:var(--white)}
+.hero-title{font-size:clamp(2.4rem,4.5vw,3.5rem);font-weight:800;text-transform:uppercase;letter-spacing:.03em;margin-bottom:.65rem;background:linear-gradient(135deg,var(--white) 30%,var(--gold-light) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-blurb{font-size:1rem;color:var(--gray-300);line-height:1.75;margin-bottom:1.5rem}
+.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+
+/* Wave divider between hero and events — currently hidden (display:none).
+   Was previously a decorative SVG curve. Can be re-enabled if desired. */
+/* No wave divider — clean bottom edge with subtle gold line */
+.hero-divider{display:none}
+
+/* ─────────────────────────────────────────────────────────────────
+   EVENTS CAROUSEL (index.html only)
+   Horizontally scrolling cards showing upcoming department events.
+   - Shows 3 cards at once on desktop, 2 on tablet, 1 on mobile
+   - Auto-scrolls every 5 seconds, pauses on hover
+   - Cards are click-expandable to show details + Google Calendar button
+   - Card widths are set dynamically by JavaScript based on viewport
+   
+   The gold border-top on .events-section creates a clean visual
+   separator between the dark hero section and the white events area.
+   ───────────────────────────────────────────────────────────────── */
+.events-section{padding:3.5rem 0 3rem;background:var(--white);overflow:hidden;border-top:3px solid var(--gold)}
+
+.events-carousel-wrap{position:relative;max-width:1100px;margin:0 auto;padding:0 3rem}
+.events-track-outer{overflow:hidden;border-radius:var(--radius-md)}
+.events-track{display:flex;padding:.5rem 0}
+
+/* Card styling only (no width set here — JavaScript calculates and applies
+   card widths dynamically based on how many should be visible at once) — width set by JS */
+.event-card{background:var(--white-pure);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:1.4rem 1.25rem;position:relative;overflow:hidden;cursor:pointer;transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
+.event-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);transition:height .3s var(--ease)}
+.event-card:hover{border-color:var(--gold-pale);box-shadow:var(--shadow-md)}
+.event-card:hover::before{height:5px}
+
+.event-date{font-family:var(--font-heading);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-dark);margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.event-date::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.event-card h3{font-size:1.05rem;color:var(--navy);margin-bottom:.35rem;transition:color .2s var(--ease)}
+.event-card:hover h3{color:var(--gold-dark)}
+.event-card .event-summary{font-size:.84rem;color:var(--text-muted);line-height:1.55}
+.event-tag{display:inline-block;font-family:var(--font-heading);font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:.18rem .5rem;border-radius:3px;margin-top:.55rem}
+.tag-competition{background:#eff6ff;color:var(--accent-blue)}
+.tag-showcase{background:#fef9ee;color:var(--gold-dark)}
+.tag-club{background:#f0fdf4;color:#16a34a}
+.tag-class{background:#faf5ff;color:var(--accent-purple)}
+
+/* EXPANDABLE DETAIL PANEL
+   Each event card has a hidden .event-details div. When the card gets
+   the .expanded class (toggled by JavaScript on click), max-height
+   transitions from 0 to 300px, creating a smooth slide-down reveal.
+   The detail panel contains a longer description + Google Calendar button. */
+.event-details{max-height:0;overflow:hidden;transition:max-height .4s var(--ease),opacity .3s var(--ease);opacity:0}
+.event-card.expanded .event-details{max-height:300px;opacity:1;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--gray-200)}
+.event-details p{font-size:.82rem;color:var(--text-muted);line-height:1.6;margin-bottom:.65rem}
+
+/* Small down-arrow indicator that rotates 180° when the card is expanded */
+.event-expand-hint{display:flex;align-items:center;justify-content:center;margin-top:.5rem;color:var(--gray-300);font-size:.75rem}
+.event-expand-hint svg{transition:transform .3s var(--ease)}
+.event-card.expanded .event-expand-hint svg{transform:rotate(180deg)}
+
+/* GOOGLE CALENDAR BUTTON
+   Appears inside the expanded detail panel. On click, JS reads
+   data-gcal-* attributes from the card and opens Google Calendar's
+   "create event" URL with pre-filled title, dates, and description. */
+.gcal-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .8rem;font-family:var(--font-heading);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;border-radius:var(--radius-sm);background:var(--navy);color:var(--gold);border:1.5px solid var(--gold);cursor:pointer;transition:all .25s var(--ease);text-decoration:none}
+.gcal-btn:hover{background:var(--gold);color:var(--navy);transform:translateY(-1px);box-shadow:0 2px 8px rgba(212,168,67,.25)}
+.gcal-btn svg{width:14px;height:14px;flex-shrink:0}
+
+/* CAROUSEL ARROW BUTTONS — positioned at left/right edges of the carousel.
+   Shared class .events-btn is also reused for the testimonials carousel. */
+.events-btn{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;background:var(--white-pure);border:1.5px solid var(--gray-200);color:var(--navy);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s var(--ease);z-index:5;box-shadow:var(--shadow-sm)}
+.events-btn:hover{border-color:var(--gold);color:var(--gold);box-shadow:var(--shadow-md)}
+.events-prev{left:-2px}
+.events-next{right:-2px}
+
+@media(max-width:900px){
+    .events-carousel-wrap{padding:0 2.5rem}
+}
+@media(max-width:600px){
+    .events-carousel-wrap{padding:0 2rem}
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   TESTIMONIALS / STUDENT VOICES (index.html only)
+   Carousel of alumni testimonial cards on a dark navy background.
+   Same scrolling behavior as events (3 visible, 5s auto, hover pause).
+   
+   Each card contains:
+   - Circular avatar with student initials (SVG, pathway-colored border)
+   - Name + "MTHS '23 · College '27" school line
+   - Italicized testimonial quote with gold left-border accent
+   - Email + LinkedIn icon links at the bottom
+   ───────────────────────────────────────────────────────────────── */
+.testimonials-section{padding:3.5rem 0 3rem;background:var(--navy);overflow:hidden}
+.testimonials-section .section-title::after{background:var(--gold)}
+
+.testimonials-carousel-wrap{position:relative;max-width:1100px;margin:0 auto;padding:0 3rem}
+.testimonials-track-outer{overflow:hidden;border-radius:var(--radius-md)}
+.testimonials-track{display:flex;padding:.5rem 0}
+
+.testimonial-card{background:var(--navy-mid);border:1px solid rgba(212,168,67,.12);border-radius:var(--radius-lg);padding:1.5rem 1.35rem;position:relative;overflow:hidden;transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
+.testimonial-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));opacity:.5;transition:opacity .3s var(--ease)}
+.testimonial-card:hover{border-color:rgba(212,168,67,.3);box-shadow:0 4px 24px rgba(0,0,0,.3)}
+.testimonial-card:hover::before{opacity:1}
+
+.testimonial-top{display:flex;align-items:center;gap:.85rem;margin-bottom:.85rem}
+.testimonial-avatar{flex-shrink:0}
+.testimonial-info h3{font-size:1rem;font-weight:700;color:var(--white);margin-bottom:.15rem}
+.testimonial-schools{font-family:var(--font-heading);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--gold)}
+
+/* Quote text — italicized with a gold left-border accent line */
+.testimonial-quote{font-size:.84rem;color:var(--gray-300);line-height:1.65;font-style:italic;position:relative;padding-left:1rem;border-left:2px solid rgba(212,168,67,.25)}
+
+/* Contact icons row — email envelope + LinkedIn logo in circular buttons */
+.testimonial-contact{display:flex;gap:.6rem;margin-top:.85rem;padding-top:.7rem;border-top:1px solid rgba(255,255,255,.06)}
+.testimonial-link{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:rgba(212,168,67,.08);color:var(--gray-400);transition:all .25s var(--ease)}
+.testimonial-link:hover{background:var(--gold);color:var(--navy);transform:translateY(-1px)}
+
+@media(max-width:900px){
+    .testimonials-carousel-wrap{padding:0 2.5rem}
+}
+@media(max-width:600px){
+    .testimonials-carousel-wrap{padding:0 2rem}
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   FOOTER
+   Shared across all pages. Navy background with gold top border.
+   Contains: gear logo + department name, external links, copyright.
+   ───────────────────────────────────────────────────────────────── */
+.site-footer{background:var(--navy);padding:2rem 0;border-top:3px solid var(--gold)}
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:.75rem;text-align:center}
+.footer-brand{display:flex;align-items:center;gap:.5rem;font-family:var(--font-heading);font-size:.9rem;font-weight:600;color:var(--gray-300);text-transform:uppercase;letter-spacing:.04em}
+.footer-links{display:flex;gap:1.25rem}
+.footer-links a{font-size:.82rem;color:var(--gray-400);transition:color .2s var(--ease)}
+.footer-links a:hover{color:var(--gold)}
+.footer-copy{font-size:.72rem;color:var(--gray-500)}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ABOUT PAGE SECTIONS (about.html only)
+   These styles only render on the About Us page.
+   ═══════════════════════════════════════════════════════════════════ */
+/* ─── PLTW EXPLAINER SECTION ───
+   Two-column grid: left = text about PLTW, right = stat cards (4 numbers).
+   Cream background to differentiate from the white pathways section below. */
+.pltw-section{padding:5rem 0 4rem;background:var(--cream)}
+.pltw-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:3rem;align-items:start}
+.pltw-text p{margin-bottom:1rem;font-size:.97rem;color:var(--text-muted);line-height:1.75}
+.pltw-text strong{color:var(--navy)}
+.pltw-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.stat-card{background:var(--white-pure);border-radius:var(--radius-md);padding:1.4rem;text-align:center;border:1px solid var(--gray-200);transition:all .3s var(--ease)}
+.stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.stat-number{font-family:var(--font-heading);font-size:2.4rem;font-weight:800;color:var(--gold);line-height:1}
+.stat-label{font-family:var(--font-heading);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray-500);margin-top:.25rem}
+
+/* ─── PATHWAYS OVERVIEW ───
+   Grid of 4 cards (Engineering, CS, Materials, Video) showing each
+   department pathway. Each card has a colored top-border matching
+   its pathway accent color, an SVG icon, and a tag badge. */
+.pathways-section{padding:4.5rem 0;background:var(--white)}
+.pathway-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.25rem}
+.pathway-card{background:var(--white-pure);border-radius:var(--radius-lg);padding:1.75rem 1.35rem;border:1px solid var(--gray-200);transition:all .3s var(--ease);position:relative;overflow:hidden}
+.pathway-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.pathway-engineering::before{background:var(--accent-blue)}
+.pathway-cs::before{background:var(--accent-purple)}
+.pathway-materials::before{background:var(--accent-green)}
+.pathway-media::before{background:var(--accent-orange)}
+.pathway-standalone::before{background:var(--gray-400)}
+.pathway-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:transparent}
+.pathway-icon{margin-bottom:.85rem}
+.pathway-engineering .pathway-icon{color:var(--accent-blue)}
+.pathway-cs .pathway-icon{color:var(--accent-purple)}
+.pathway-materials .pathway-icon{color:var(--accent-green)}
+.pathway-media .pathway-icon{color:var(--accent-orange)}
+.pathway-standalone .pathway-icon{color:var(--gray-400)}
+.pathway-card h3{font-size:1.15rem;font-weight:700;margin-bottom:.4rem;color:var(--navy)}
+.pathway-card p{font-size:.84rem;color:var(--text-muted);line-height:1.6;margin-bottom:.8rem}
+.pathway-tag{display:inline-block;font-family:var(--font-heading);font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.2rem .55rem;border-radius:3px;background:var(--gray-100);color:var(--gray-500)}
+
+/* ─── FACULTY SECTION ───
+   "Tree" layout: department supervisor (Morolda) at top in a large
+   navy card, connected by a gold line to a flexbox grid of 7 teachers.
+   Flexbox with justify-content:center ensures the bottom row of 3
+   cards centers beneath the top row of 4. */
+.faculty-section{padding:5rem 0;background:var(--cream)}
+.faculty-tree{display:flex;flex-direction:column;align-items:center;gap:2rem}
+.faculty-card{text-align:center;padding:1.4rem;border-radius:var(--radius-lg);transition:all .3s var(--ease)}
+.faculty-card:hover{transform:translateY(-3px)}
+.faculty-lead{background:var(--navy);color:var(--white);padding:1.75rem 2.5rem;border:2px solid var(--gold);box-shadow:var(--shadow-lg)}
+.faculty-lead h3{font-size:1.35rem;color:var(--gold)}
+.faculty-avatar{margin-bottom:.6rem;display:flex;justify-content:center}
+.faculty-role{display:block;font-size:.82rem;color:var(--gray-300);margin-bottom:.2rem}
+.faculty-teaches{display:inline-block;font-family:var(--font-heading);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:.18rem .55rem;border-radius:3px;background:rgba(212,168,67,.15);color:var(--gold);margin-top:.2rem}
+.faculty-connector{width:2px;height:32px;background:var(--gold);opacity:.3}
+.faculty-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1.25rem}
+.faculty-grid .faculty-card{background:var(--white-pure);border:1px solid var(--gray-200);width:calc(25% - 1rem);min-width:160px;max-width:200px}
+.faculty-grid .faculty-card h3{font-size:.95rem;color:var(--navy)}
+.faculty-grid .faculty-teaches{background:var(--gray-100);color:var(--gray-500)}
+
+/* Faculty email links — small, gold-tinted, break long addresses cleanly */
+.faculty-email{display:block;font-size:.65rem;color:var(--gold-dark);margin-top:.35rem;transition:color .2s var(--ease);word-break:break-all}
+.faculty-email:hover{color:var(--gold)}
+.faculty-lead /* Faculty email links — small, gold-tinted, break long addresses cleanly */
+.faculty-email{color:var(--gray-300);font-size:.7rem}
+.faculty-lead .faculty-email:hover{color:var(--gold-light)}
+
+/* ─── CLASSES / BUILD YOUR TRACK ───
+   Course prerequisite flowcharts organized by pathway.
+   Each pathway has a colored track-title header and a horizontal
+   flow of course cards connected by arrow (→) separators.
+   
+   Cards use left-border color to indicate pathway, and have:
+   - cc-flags: PLTW/Honors/AP/Capstone badges at top-right (absolute)
+   - cc-level: "Entry Point" or "Capstone" label inline in the card body
+   - cc-meta: grade level, credits, prerequisites
+   - cc-desc: course description text */
+.classes-section{padding:5rem 0;background:var(--white)}
+.flowchart-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:1.1rem;margin-bottom:2.5rem;padding:.85rem 1.25rem;background:var(--cream);border-radius:var(--radius-md);border:1px solid var(--gray-200)}
+.legend-item{display:flex;align-items:center;gap:.35rem;font-size:.78rem;font-family:var(--font-heading);font-weight:500;text-transform:uppercase;letter-spacing:.04em;color:var(--gray-500)}
+.legend-dot{width:11px;height:11px;border-radius:3px}
+.track-section{margin-bottom:2.75rem}
+.track-title{display:flex;align-items:center;gap:.55rem;font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--navy);padding-bottom:.65rem;border-bottom:3px solid;margin-bottom:1.25rem}
+.track-flow{display:flex;align-items:flex-start;gap:.85rem;overflow-x:auto;padding-bottom:.75rem;scrollbar-width:thin}
+.flow-arrow{flex-shrink:0;display:flex;align-items:center;font-size:1.4rem;font-weight:700;color:var(--gold);padding-top:2.2rem}
+.course-card-group{display:flex;flex-direction:column;gap:.65rem;flex-shrink:0}
+.course-card{background:var(--white-pure);border-radius:var(--radius-md);padding:1.6rem 1.1rem 1.1rem;border:1.5px solid var(--gray-200);min-width:230px;max-width:268px;transition:all .3s var(--ease);position:relative;flex-shrink:0}
+.course-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.course-card h4{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:.12rem}
+.cc-full{display:block;font-size:.74rem;color:var(--gray-500);margin-bottom:.35rem}
+.cc-meta{display:block;font-family:var(--font-heading);font-size:.67rem;font-weight:500;text-transform:uppercase;letter-spacing:.04em;color:var(--gray-400);margin-bottom:.45rem}
+.cc-desc{font-size:.79rem;color:var(--text-muted);line-height:1.55}
+
+/* FLAG BADGES — absolutely positioned at top-right corner of each card.
+   Multiple flags can stack horizontally (e.g., "PLTW" + "Honors").
+   Colors: PLTW=blue, Honors=purple, AP=amber, Capstone=green */
+.cc-flags{position:absolute;top:6px;right:8px;display:flex;gap:.25rem;z-index:2}
+.flag{display:inline-block;font-family:var(--font-heading);font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:.15rem .4rem;border-radius:3px}
+.flag-pltw{background:#0f4c81;color:#7ec8e3}
+.flag-honors{background:#6d28d9;color:#ddd6fe}
+.flag-ap{background:#b45309;color:#fde68a}
+.flag-capstone{background:#065f46;color:#a7f3d0}
+
+/* ENTRY/LEVEL LABEL — inline badge in card body (where flags used to be).
+   Shows "Entry Point" for intro courses or "Capstone" for the capstone. */
+/* Entry / level label — inline in the card body */
+.cc-level{display:inline-block;font-family:var(--font-heading);font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:.18rem .5rem;border-radius:3px;margin-bottom:.4rem}
+.cc-level-entry{background:rgba(212,168,67,.12);color:var(--gold-dark)}
+.cc-level-advanced{background:rgba(100,100,100,.08);color:var(--gray-500)}
+
+.flag-legend{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-bottom:2rem;justify-content:center}
+
+/* Old cc-badge system (hidden) — replaced by cc-flags + cc-level above */
+.cc-badge{display:none}
+.cc-badge{position:absolute;top:-1px;right:10px;font-family:var(--font-heading);font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.12rem .45rem;border-radius:0 0 4px 4px;color:var(--white)}
+/* PATHWAY COLOR CODING — left border + heading color per pathway */
+.cc-blue{border-left:4px solid var(--accent-blue)}.cc-blue .cc-badge{background:var(--accent-blue)}.cc-blue h4{color:var(--accent-blue)}
+.cc-purple{border-left:4px solid var(--accent-purple)}.cc-purple .cc-badge{background:var(--accent-purple)}.cc-purple h4{color:var(--accent-purple)}
+.cc-green{border-left:4px solid var(--accent-green)}.cc-green .cc-badge{background:var(--accent-green)}.cc-green h4{color:var(--accent-green)}
+.cc-orange{border-left:4px solid var(--accent-orange)}.cc-orange .cc-badge{background:var(--accent-orange)}.cc-orange h4{color:var(--accent-orange)}
+.cc-gray{border-left:4px solid var(--gray-300)}.cc-gray h4{color:var(--gray-500)}
+.cc-entry{border-width:2px;border-style:solid}
+.cc-blue.cc-entry{border-color:var(--accent-blue);background:rgba(59,130,246,.025)}
+.cc-purple.cc-entry{border-color:var(--accent-purple);background:rgba(139,92,246,.025)}
+.cc-green.cc-entry{border-color:var(--accent-green);background:rgba(34,197,94,.025)}
+.cc-orange.cc-entry{border-color:var(--accent-orange);background:rgba(245,158,11,.025)}
+.cc-capstone{border:2px dashed var(--gold);background:rgba(212,168,67,.03)}
+.cc-capstone .cc-badge{background:var(--gold-dark)}
+.track-also{margin-top:.85rem;padding-top:.85rem;border-top:1px dashed var(--gray-300);display:flex;align-items:flex-start;gap:.85rem;flex-wrap:wrap}
+.also-label{font-family:var(--font-heading);font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--gray-400);padding-top:.7rem}
+.cc-small{min-width:170px;max-width:195px;padding:.7rem .85rem}
+.cc-small h4{font-size:.9rem}
+.standalone-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.85rem}
+.standalone-grid .course-card{max-width:none;min-width:0}
+
+/* ─── CLUBS SECTION ───
+   Grid of club cards (Robotics, STEM Night, Coding Club, Film & Media).
+   Each card has an emoji icon, description, and optional external link. */
+.clubs-section{padding:5rem 0;background:var(--cream)}
+.clubs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
+.club-card{background:var(--white-pure);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:1.75rem 1.35rem;transition:all .3s var(--ease);text-align:center}
+.club-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--gold)}
+.club-icon{font-size:2.2rem;margin-bottom:.65rem}
+.club-card h3{font-size:1.1rem;color:var(--navy);margin-bottom:.4rem}
+.club-card p{font-size:.84rem;color:var(--text-muted);line-height:1.6;margin-bottom:.65rem}
+.club-link{font-family:var(--font-heading);font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--gold-dark);transition:color .2s var(--ease)}
+.club-link:hover{color:var(--gold)}
+
+/* ─────────────────────────────────────────────────────────────────
+   PAGE HEADER — used on about.html as the top banner.
+   Navy background with blueprint grid texture (same as hero).
+   Gold heading + gray subtitle, centered.
+   padding-top:100px accounts for the fixed navbar height.
+   ───────────────────────────────────────────────────────────────── */
+.page-header{background:var(--navy);padding:100px 0 3rem;text-align:center;position:relative;overflow:hidden}
+.page-header::before{content:'';position:absolute;inset:0;background-image:
+    linear-gradient(rgba(212,168,67,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(212,168,67,.03) 1px,transparent 1px);
+    background-size:40px 40px;pointer-events:none}
+.page-header h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--gold);position:relative;z-index:2}
+.page-header p{color:var(--gray-300);font-size:1rem;margin-top:.5rem;position:relative;z-index:2}
+
+/* ─────────────────────────────────────────────────────────────────
+   ANIMATIONS
+   fadeUp: elements slide up 24px while fading in on page load.
+   Applied to hero content (0.15s delay) and carousel (0.3s delay)
+   for a staggered entrance effect.
+   ───────────────────────────────────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-content{animation:fadeUp .7s ease-out .15s both}
+.carousel-wrapper{animation:fadeUp .7s ease-out .3s both}
+
+/* ─────────────────────────────────────────────────────────────────
+   RESPONSIVE BREAKPOINTS
+   
+   @900px (TABLET): Hero switches to single-column layout, carousel
+   stacks above text. Course flowcharts stack vertically. Arrows rotate.
+   
+   @700px (MOBILE): Hamburger menu replaces nav links. Hero shrinks.
+   Faculty grid goes to 2 columns. Events carousel uses less padding.
+   ───────────────────────────────────────────────────────────────── */
+@media(max-width:900px){
+    .hero-inner{grid-template-columns:1fr;text-align:center;gap:1.5rem}
+    .hero-carousel-col{max-width:100%;margin:0 auto}
+    .carousel-wrapper{height:300px;padding-bottom:0;max-height:none}
+    .hero-blurb{margin-left:auto;margin-right:auto;max-width:500px}
+    .hero-actions{justify-content:center}
+    .pltw-grid{grid-template-columns:1fr}
+    .track-flow{flex-direction:column;align-items:stretch}
+    .flow-arrow{padding-top:0;justify-content:center;transform:rotate(90deg)}
+    .course-card{max-width:none;min-width:0}
+}
+@media(max-width:700px){
+    .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:var(--navy);flex-direction:column;padding:1rem;border-top:1px solid rgba(212,168,67,.15);box-shadow:var(--shadow-lg)}
+    .nav-links.open{display:flex}
+    /* HAMBURGER MENU — hidden by default (display:none).
+   Shown on mobile via @media(max-width:700px).
+   Three <span> bars animate into an X when .open class is toggled by JS. */
+.hamburger{display:flex}
+    .hero{padding:76px 0 2rem}
+    .hero-inner{gap:1rem}
+    .hero-carousel-col{max-width:100%}
+    .carousel-wrapper{height:260px;padding-bottom:0;max-height:none}
+    .hero-title{font-size:2rem}
+    .hero-blurb{font-size:.92rem}
+    .faculty-grid .faculty-card{width:calc(50% - 1rem);max-width:260px}
+    .flowchart-legend{flex-direction:column;align-items:flex-start}
+    .events-carousel-wrap{padding:0 2rem}
+    .events-section{padding:2.5rem 0 2rem}
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   NAV DROPDOWN — "Course Highlights" menu
+   Shows a dropdown list of 7 featured courses on hover/click.
+   The dropdown is hidden by default and appears when the parent
+   .nav-dropdown gets the .open class or is hovered.
+   ───────────────────────────────────────────────────────────────── */
+/* ─── MEGA-MENU DROPDOWN — full-width panel below nav ─── */
+.nav-dropdown{position:static}
+.nav-dropdown-toggle{cursor:pointer;display:flex;align-items:center;gap:.3rem}
+.nav-dropdown-toggle::after{content:'▾';font-size:.7em;opacity:.6;transition:transform .25s var(--ease)}
+.nav-dropdown.open .nav-dropdown-toggle::after{transform:rotate(180deg)}
+.nav-dropdown-menu{display:none;position:absolute;top:64px;left:0;right:0;background:var(--navy);border-top:2px solid var(--gold);border-bottom:2px solid rgba(212,168,67,.25);padding:1.5rem 0;box-shadow:0 12px 40px rgba(0,0,0,.4);z-index:999}
+.nav-dropdown.open .nav-dropdown-menu{display:block}
+.nav-dropdown-menu-inner{max-width:1180px;margin:0 auto;padding:0 1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.5rem 1.5rem}
+.nav-dropdown-menu a{display:flex;align-items:center;gap:.6rem;padding:.65rem .85rem;border-radius:var(--radius-sm);font-family:var(--font-heading);font-size:.82rem;font-weight:500;letter-spacing:.03em;text-transform:uppercase;color:var(--gray-300);transition:all .2s var(--ease);border:1px solid transparent}
+.nav-dropdown-menu a:hover{color:var(--gold);background:rgba(212,168,67,.06);border-color:rgba(212,168,67,.12)}
+.nav-dropdown-menu .dd-icon{width:32px;height:32px;border-radius:50%;background:rgba(212,168,67,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:var(--gold);font-family:var(--font-heading);font-weight:700}
+.nav-dropdown-menu .dd-text{display:flex;flex-direction:column;gap:.1rem}
+.nav-dropdown-menu .dd-text span:first-child{font-weight:600;font-size:.8rem;color:var(--white)}
+.nav-dropdown-menu .dd-text span:last-child{font-size:.65rem;font-weight:400;color:var(--gray-400);text-transform:none;letter-spacing:0}
+
+/* ─────────────────────────────────────────────────────────────────
+   COURSE HIGHLIGHTS PAGE (courses.html)
+   Each course is a full section with multiple subsections.
+   ───────────────────────────────────────────────────────────────── */
+
+/* Course navigation strip — sticky tabs at top of course page */
+.course-nav{background:var(--navy-mid);padding:.75rem 0;border-bottom:1px solid rgba(212,168,67,.15);position:sticky;top:64px;z-index:50;overflow-x:auto}
+.course-nav-inner{display:flex;gap:.5rem;justify-content:center;flex-wrap:nowrap}
+.course-nav-link{font-family:var(--font-heading);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:.4rem .8rem;border-radius:var(--radius-sm);color:var(--gray-400);white-space:nowrap;transition:all .2s var(--ease)}
+.course-nav-link:hover,.course-nav-link.active{color:var(--gold);background:rgba(212,168,67,.1)}
+
+/* Individual course section */
+.course-section{padding:4rem 0 3rem;border-bottom:1px solid var(--gray-200)}
+.course-section:nth-child(even){background:var(--cream)}
+
+/* Course header — title + pathway badge */
+.course-header{text-align:center;margin-bottom:2.5rem}
+.course-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--navy);margin-bottom:.35rem}
+.course-header .course-subtitle{font-size:.95rem;color:var(--text-muted);max-width:650px;margin:0 auto .75rem}
+.course-header .cc-flags{position:static;display:flex;justify-content:center;gap:.3rem}
+
+/* Course content grid — 2 columns on desktop */
+.course-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start}
+.course-grid-full{grid-column:1/-1}
+
+/* Course image carousel (per-course) */
+.course-carousel-wrap{position:relative;border-radius:var(--radius-lg);overflow:hidden;border:2px solid var(--gray-200)}
+.course-carousel-track{display:flex;transition:transform .5s var(--ease)}
+.course-carousel-slide{min-width:100%;position:relative}
+.course-carousel-slide img,.course-slide-placeholder{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.course-slide-placeholder{background:var(--navy-mid);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:var(--gray-400);font-size:.8rem}
+.course-slide-placeholder .slide-num{font-family:var(--font-heading);font-size:2rem;font-weight:800;opacity:.15}
+.course-carousel-caption{position:absolute;bottom:0;left:0;right:0;padding:.6rem 1rem;background:linear-gradient(transparent,rgba(12,26,46,.85));color:var(--white);font-size:.78rem;font-family:var(--font-heading);letter-spacing:.03em}
+.course-carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(12,26,46,.7);border:1.5px solid var(--gold);color:var(--gold);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;transition:all .2s var(--ease)}
+.course-carousel-btn:hover{background:var(--gold);color:var(--navy)}
+.course-carousel-prev{left:8px}
+.course-carousel-next{right:8px}
+.course-carousel-dots{display:flex;justify-content:center;gap:5px;margin-top:.6rem}
+.course-carousel-dots .dot{width:7px;height:7px}
+
+/* Course detail blocks */
+.course-detail-block{margin-bottom:2rem}
+.course-detail-block h3{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}
+.course-detail-block h3 svg{flex-shrink:0}
+.course-detail-block p,.course-detail-block li{font-size:.88rem;color:var(--text-muted);line-height:1.65}
+.course-detail-block ul{list-style:none;padding:0}
+.course-detail-block ul li{padding:.3rem 0 .3rem 1.2rem;position:relative}
+.course-detail-block ul li::before{content:'▸';position:absolute;left:0;color:var(--gold);font-weight:700}
+
+/* Course teacher card */
+.course-teacher{display:flex;align-items:center;gap:1rem;background:var(--white-pure);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:1rem 1.25rem}
+.course-teacher h4{font-size:.95rem;color:var(--navy);margin-bottom:.1rem}
+.course-teacher span{font-size:.75rem;color:var(--text-muted)}
+.course-teacher a{font-size:.7rem;color:var(--gold-dark)}
+
+/* Course testimonials (mini carousel, same style as main page) */
+.course-testimonials-wrap{position:relative;padding:0 2.5rem}
+.course-testimonials-track-outer{overflow:hidden;border-radius:var(--radius-md)}
+.course-testimonials-track{display:flex;padding:.25rem 0}
+.course-testimonial-card{background:var(--white-pure);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:1.2rem 1rem;position:relative}
+.course-testimonial-card .testimonial-quote{border-left-color:var(--gray-200);font-size:.82rem;padding-left:.8rem}
+.course-testimonial-card .testimonial-top{margin-bottom:.6rem}
+.course-testimonial-card .testimonial-info h3{font-size:.88rem;color:var(--navy)}
+.course-testimonial-card .testimonial-schools{color:var(--gold-dark)}
+
+/* Course highlights carousel (events/competitions/wins) */
+.course-highlights-wrap{position:relative;padding:0 2.5rem}
+.course-highlights-outer{overflow:hidden;border-radius:var(--radius-md)}
+.course-highlights-track{display:flex;padding:.25rem 0}
+.course-highlight-card{background:var(--white-pure);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:1.25rem 1.1rem;position:relative;overflow:hidden}
+.course-highlight-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold)}
+.course-highlight-card h4{font-size:.95rem;color:var(--navy);margin-bottom:.3rem}
+.course-highlight-card p{font-size:.82rem;color:var(--text-muted);line-height:1.55}
+.course-highlight-tag{display:inline-block;font-family:var(--font-heading);font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:.15rem .4rem;border-radius:3px;margin-top:.5rem;background:#fef9ee;color:var(--gold-dark)}
+
+@media(max-width:900px){
+    .course-grid{grid-template-columns:1fr}
+    .course-nav-inner{justify-content:flex-start;padding:0 1rem}
+    .nav-dropdown-menu-inner{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+    .course-nav{top:64px}
+    .course-testimonials-wrap,.course-highlights-wrap{padding:0 1.5rem}
+}

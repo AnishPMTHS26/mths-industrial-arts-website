@@ -1,0 +1,527 @@
+<!--
+═══════════════════════════════════════════════════════════════════
+FILE: about.html
+PAGE: About Us (Department Information Subpage)
+SITE: MTHS Industrial Arts Department
+
+WHAT THIS PAGE CONTAINS:
+1. Navigation bar (shared with index.html)
+2. Page header banner ("About Us" title on navy background)
+3. What is PLTW? — explainer text + 4 stat cards
+4. Our Pathways — 4 pathway overview cards
+5. Meet the Faculty — supervisor + 7 teachers with emails
+6. Build Your Track — course prerequisite flowcharts by pathway
+7. Clubs & Activities — 4 club cards with external links
+8. Footer (shared with index.html)
+
+CONNECTED FILES:
+- style.css — All visual styling
+- script.js — Nav toggle, scroll reveal animations
+- index.html — Home page (linked from nav)
+
+FACULTY INFO:
+Names, titles, and emails are real school staff data.
+Avatar initials and border colors are assigned per person.
+Zachary Morolda is the department supervisor (top card).
+
+COURSE INFORMATION:
+Sourced from the MTHS 2026-27 Program of Studies document.
+Organized into 4 pathways: PLTW Engineering, Computer Science,
+Materials & Construction, and Video Production & Media.
+Each card shows flags (PLTW/Honors/AP/Capstone) at top-right
+and "Entry Point" labels inline for introductory courses.
+═══════════════════════════════════════════════════════════════════
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — MTHS Engineering</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ═══════════ NAVIGATION (same structure as index.html) ═══════════
+         "About Us" link has the .active class on this page.
+         ════════════════════════════════════════════════════════════════ -->
+    <nav class="main-nav" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">
+                <svg class="nav-gear" viewBox="0 0 40 40" width="32" height="32">
+                    <path d="M20 2l2.5 5.5 5.5-2.5-2 5.5L32 13l-5.5 2.5L29 21l-5.5-2.5L20 24l-2.5-5.5L12 21l2-5.5L8 13l5.5-2.5L11 5l5.5 2.5z" fill="#d4a843"/>
+                    <circle cx="20" cy="13" r="5" fill="#0c1a2e" stroke="#d4a843" stroke-width="1.5"/>
+                </svg>
+                <span>MTHS Engineering</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link active">About Us</a>
+                <div class="nav-dropdown" id="courseDropdown">
+                    <span class="nav-link nav-dropdown-toggle" id="courseDropdownToggle">Course Highlights</span>
+                    <div class="nav-dropdown-menu">
+                        <div class="nav-dropdown-menu-inner">
+                            <a href="ied.html"><div class="dd-icon">IED</div><div class="dd-text"><span>Intro to Engineering Design</span><span>PLTW &middot; Grades 9-10</span></div></a>
+                            <a href="poe.html"><div class="dd-icon">POE</div><div class="dd-text"><span>Principles of Engineering</span><span>PLTW &middot; Honors &middot; Grades 10-12</span></div></a>
+                            <a href="capstone.html"><div class="dd-icon">CAP</div><div class="dd-text"><span>PLTW Capstone</span><span>Honors &middot; Capstone &middot; Grades 11-12</span></div></a>
+                            <a href="apcsp.html"><div class="dd-icon">CSP</div><div class="dd-text"><span>AP Computer Science Principles</span><span>AP &middot; No Prereq &middot; Grades 10-12</span></div></a>
+                            <a href="apcyber.html"><div class="dd-icon">CYB</div><div class="dd-text"><span>AP Cybersecurity</span><span>AP &middot; New 2026-27 &middot; Grades 10-12</span></div></a>
+                            <a href="vehicular.html"><div class="dd-icon">VEH</div><div class="dd-text"><span>Vehicular Systems &amp; Metal Fab</span><span>No Prereq &middot; Grades 10-12</span></div></a>
+                            <a href="morning.html"><div class="dd-icon">TMS</div><div class="dd-text"><span>The Morning Show</span><span>No Prereq &middot; Grades 9-12</span></div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ═══════════ PAGE HEADER ═══════════
+         Navy banner with "About Us" title in gold.
+         Blueprint grid texture matches the hero section on index.html.
+         padding-top:100px accounts for the fixed navbar height.
+         ════════════════════════════════════════════════════════════ -->
+    <header class="page-header">
+        <h1>About Us</h1>
+        <p>The Industrial Arts Department at Monroe Township High School</p>
+    </header>
+
+    <!-- ═══════════ WHAT IS PLTW? ═══════════
+         Two-column layout:
+         - Left: 3 paragraphs explaining PLTW + link to pltw.org
+         - Right: 4 stat cards (Pathways, Courses, Faculty, AP Options)
+         The stats are manually set — update numbers if offerings change.
+         ════════════════════════════════════════════════════════════ -->
+    <section class="pltw-section" id="pltw">
+        <div class="container">
+            <h2 class="section-title">What Is PLTW?</h2>
+            <div class="pltw-grid">
+                <div class="pltw-text">
+                    <p><strong>Project Lead The Way (PLTW)</strong> is the nation's leading provider of PreK-12 STEM programs. PLTW Engineering teaches students that real-world problems have multiple solutions and many pathways to success.</p>
+                    <p>Through activity-, project-, and problem-based learning, students engage in compelling real-world challenges that help them become better collaborators and thinkers. MTHS is proud to be a PLTW-certified school.</p>
+                    <p>Our PLTW Engineering sequence includes Introduction to Engineering Design (IED), Principles of Engineering (POE), Civil Engineering &amp; Architecture (CEA), and the Honors Applied Research &amp; Design Capstone.</p>
+                    <a href="https://www.pltw.org" target="_blank" rel="noopener" class="btn btn-outline-dark" style="margin-top:.5rem">Visit PLTW.org →</a>
+                </div>
+                <div class="pltw-stats">
+                    <div class="stat-card"><div class="stat-number">4</div><div class="stat-label">Pathways</div></div>
+                    <div class="stat-card"><div class="stat-number">20+</div><div class="stat-label">Courses</div></div>
+                    <div class="stat-card"><div class="stat-number">8</div><div class="stat-label">Faculty</div></div>
+                    <div class="stat-card"><div class="stat-number">4</div><div class="stat-label">AP Options</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ PATHWAYS OVERVIEW ═══════════
+         4 cards showing the department's pathway areas.
+         Each card has a colored top-border, SVG icon, short description,
+         and a tag (PLTW Certified, AP & PLTW, CTE).
+         The standalone pathway card was removed — those courses now
+         live inside their respective pathway tracks below.
+         ════════════════════════════════════════════════════════════ -->
+    <section class="pathways-section" id="pathways">
+        <div class="container">
+            <h2 class="section-title">Our Pathways</h2>
+            <p class="section-desc">Five distinct tracks. Countless possibilities. Find your fit.</p>
+            <div class="pathway-grid">
+                <div class="pathway-card pathway-engineering">
+                    <div class="pathway-icon"><svg viewBox="0 0 48 48" width="42" height="42"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M16 24h16M24 16v16M18 18l12 12M30 18L18 30" stroke="currentColor" stroke-width="1.5" opacity=".5"/><circle cx="24" cy="24" r="8" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+                    <h3>PLTW Engineering</h3>
+                    <p>From Introduction to Engineering Design through the Honors Capstone — design, prototype, and solve real-world problems.</p>
+                    <span class="pathway-tag">PLTW Certified</span>
+                </div>
+                <div class="pathway-card pathway-cs">
+                    <div class="pathway-icon"><svg viewBox="0 0 48 48" width="42" height="42"><rect x="8" y="12" width="32" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="16" y1="38" x2="32" y2="38" stroke="currentColor" stroke-width="2.5"/><line x1="24" y1="34" x2="24" y2="38" stroke="currentColor" stroke-width="2.5"/><text x="24" y="27" text-anchor="middle" font-size="10" font-family="monospace" fill="currentColor">&lt;/&gt;</text></svg></div>
+                    <h3>Computer Science</h3>
+                    <p>Block-based coding to AP-level courses in CSP, CSA, and Cybersecurity — build the digital skills employers demand.</p>
+                    <span class="pathway-tag">AP &amp; PLTW</span>
+                </div>
+                <div class="pathway-card pathway-materials">
+                    <div class="pathway-icon"><svg viewBox="0 0 48 48" width="42" height="42"><path d="M12 36V16l12-8 12 8v20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><rect x="18" y="26" width="12" height="10" fill="none" stroke="currentColor" stroke-width="2"/><line x1="24" y1="26" x2="24" y2="36" stroke="currentColor" stroke-width="1.5"/></svg></div>
+                    <h3>Materials &amp; Construction</h3>
+                    <p>Hands-on work with wood, metals, plastics, and building systems — from materials science to cabinetmaking.</p>
+                    <span class="pathway-tag">CTE</span>
+                </div>
+                <div class="pathway-card pathway-media">
+                    <div class="pathway-icon"><svg viewBox="0 0 48 48" width="42" height="42"><rect x="8" y="14" width="32" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><polygon points="20,19 20,29 30,24" fill="currentColor" opacity=".7"/></svg></div>
+                    <h3>Video Production &amp; Media</h3>
+                    <p>Studio production, field shooting, editing, and scriptwriting — tell stories through professional video and electronic media.</p>
+                    <span class="pathway-tag">CTE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ MEET THE FACULTY ═══════════
+         Faculty "tree" layout:
+         - TOP: Zachary Morolda (Department Supervisor) in a large navy card
+         - CONNECTOR: Gold vertical line
+         - BOTTOM: 7 teachers in a flex-wrap grid (4 top row, 3 bottom centered)
+         
+         Each teacher card shows:
+         - SVG circle avatar with initials (colored border per person)
+         - Full name
+         - Teaching area badge (Industrial Arts, Engineering/Tech Ed, etc.)
+         - Clickable email address
+         
+         TO UPDATE: Change the <h3>, faculty-teaches text, email href,
+         and avatar initials/stroke color for each teacher card.
+         ════════════════════════════════════════════════════════════ -->
+    <section class="faculty-section" id="faculty">
+        <div class="container">
+            <h2 class="section-title">Meet the Faculty</h2>
+            <p class="section-desc">The team behind MTHS Industrial Arts Department</p>
+            <div class="faculty-tree">
+                <div class="faculty-card faculty-lead">
+                    <div class="faculty-avatar"><svg viewBox="0 0 76 76" width="76" height="76"><circle cx="38" cy="38" r="36" fill="#0c1a2e" stroke="#d4a843" stroke-width="2"/><circle cx="38" cy="30" r="11" fill="#d4a843" opacity=".25"/><path d="M19 60a19 19 0 0 1 38 0" fill="#d4a843" opacity=".15"/><text x="38" y="43" text-anchor="middle" font-size="20" font-family="Barlow Condensed" font-weight="700" fill="#d4a843">ZM</text></svg></div>
+                    <h3>Zachary Morolda</h3>
+                    <span class="faculty-role">K-12 Supervisor of Grants, Testing &amp; Special Projects</span>
+                    <span class="faculty-teaches">Department Supervisor</span>
+                    <a href="mailto:zmorolda@monroe.k12.nj.us" class="faculty-email">zmorolda@monroe.k12.nj.us</a>
+                </div>
+                <div class="faculty-connector"></div>
+                <div class="faculty-grid">
+                    <div class="faculty-card">
+                        <div class="faculty-avatar"><svg viewBox="0 0 66 66" width="66" height="66"><circle cx="33" cy="33" r="31" fill="#1b2f50" stroke="#3b82f6" stroke-width="2"/><text x="33" y="38" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="600" fill="#3b82f6">DL</text></svg></div>
+                        <h3>Daniel Lombardi</h3>
+                        <span class="faculty-teaches">Industrial Arts</span>
+                        <a href="mailto:dlombard@monroe.k12.nj.us" class="faculty-email">dlombard@monroe.k12.nj.us</a>
+                    </div>
+                    <div class="faculty-card">
+                        <div class="faculty-avatar"><svg viewBox="0 0 66 66" width="66" height="66"><circle cx="33" cy="33" r="31" fill="#1b2f50" stroke="#22c55e" stroke-width="2"/><text x="33" y="38" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="600" fill="#22c55e">MN</text></svg></div>
+                        <h3>Maxie Nixon</h3>
+                        <span class="faculty-teaches">Industrial Arts</span>
+                        <a href="mailto:mnixon@monroe.k12.nj.us" class="faculty-email">mnixon@monroe.k12.nj.us</a>
+                    </div>
+                    <div class="faculty-card">
+                        <div class="faculty-avatar"><svg viewBox="0 0 66 66" width="66" height="66"><circle cx="33" cy="33" r="31" fill="#1b2f50" stroke="#ef4444" stroke-width="2"/><text x="33" y="38" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="600" fill="#ef4444">MC</text></svg></div>
+                        <h3>Meghan Cobb</h3>
+                        <span class="faculty-teaches">Engineering / Tech Ed.</span>
+                        <a href="mailto:mcobb@monroe.k12.nj.us" class="faculty-email">mcobb@monroe.k12.nj.us</a>
+                    </div>
+                    <div class="faculty-card">
+                        <div class="faculty-avatar"><svg viewBox="0 0 66 66" width="66" height="66"><circle cx="33" cy="33" r="31" fill="#1b2f50" stroke="#8b5cf6" stroke-width="2"/><text x="33" y="38" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="600" fill="#8b5cf6">VG</text></svg></div>
+                        <h3>Vanitha Gaurishanker</h3>
+                        <span class="faculty-teaches">Engineering / Tech Ed.</span>
+                        <a href="mailto:vgaurish@monroe.k12.nj.us" class="faculty-email">vgaurish@monroe.k12.nj.us</a>
+                    </div>
+                    <div class="faculty-card">
+                        <div class="faculty-avatar"><svg viewBox="0 0 66 66" width="66" height="66"><circle cx="33" cy="33" r="31" fill="#1b2f50" stroke="#f59e0b" stroke-width="2"/><text x="33" y="38" text-anchor="middle" font-size="14" font-family="Barlow Condensed" font-weight="600" fill="#f59e0b">MM</text></svg></div>
+                        <h3>Marissa McLaughlin</h3>
+                        <span class="faculty-teaches">Industrial Arts</span>
+                        <a href="mailto:mmclaugh@monroe.k12.nj.us" class="faculty-email">mmclaugh@monroe.k12.nj.us</a>
+                    </div>
+                    <div class="faculty-card">
+                        <div class="faculty-avatar"><svg viewBox="0 0 66 66" width="66" height="66"><circle cx="33" cy="33" r="31" fill="#1b2f50" stroke="#f97316" stroke-width="2"/><text x="33" y="38" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="600" fill="#f97316">LM</text></svg></div>
+                        <h3>Larissa Miller</h3>
+                        <span class="faculty-teaches">TV Prod. &amp; Video Tech</span>
+                        <a href="mailto:lmiller@monroe.k12.nj.us" class="faculty-email">lmiller@monroe.k12.nj.us</a>
+                    </div>
+                    <div class="faculty-card">
+                        <div class="faculty-avatar"><svg viewBox="0 0 66 66" width="66" height="66"><circle cx="33" cy="33" r="31" fill="#1b2f50" stroke="#e879f9" stroke-width="2"/><text x="33" y="38" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="600" fill="#e879f9">BH</text></svg></div>
+                        <h3>Boris Hladek</h3>
+                        <span class="faculty-teaches">TV Prod. &amp; Video Tech</span>
+                        <a href="mailto:bhladek@monroe.k12.nj.us" class="faculty-email">bhladek@monroe.k12.nj.us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ CLASSES / BUILD YOUR TRACK ═══════════
+         Course prerequisite flowcharts organized by pathway.
+         
+         STRUCTURE PER PATHWAY:
+         .track-section > .track-title + .track-flow
+         Inside .track-flow: course-cards and flow-arrows (→) arranged
+         left-to-right showing the prerequisite chain.
+         .course-card-group stacks multiple cards vertically when
+         several courses branch from the same prerequisite.
+         
+         CARD ANATOMY:
+         - .cc-flags (top-right): PLTW / Honors / AP / Capstone badges
+         - h4: Course abbreviation (IED, POE, CSE, etc.)
+         - .cc-full: Full course name
+         - .cc-meta: Grade level, credits, prerequisite info
+         - .cc-level: "Entry Point" or "Capstone" inline label
+         - .cc-desc: Course description paragraph
+         
+         COLOR CODING:
+         .cc-blue = PLTW Engineering pathway
+         .cc-purple = Computer Science pathway
+         .cc-green = Materials & Construction pathway
+         .cc-orange = Video & Media pathway
+         
+         IMPORTANT NOTES:
+         - AP CSP is listed as an Entry Point (no prereq required)
+         - Drafting & CAD and Engineering Essentials are in the
+           Engineering pathway as no-prereq entry points
+         - Vehicular Systems is in Materials & Construction as no-prereq
+         - Morning Show and Writing for Electronic Media are in Video
+         
+         LEGEND: The flag-legend div at the top explains the badge colors.
+         FLOWCHART LEGEND: Shows pathway color coding.
+         ════════════════════════════════════════════════════════════ -->
+    <section class="classes-section" id="classes">
+        <div class="container">
+            <h2 class="section-title">Build Your Track</h2>
+            <p class="section-desc">Follow the prerequisite chains below to plan your pathway through MTHS.</p>
+
+            <div class="flowchart-legend">
+                <span class="legend-item"><span class="legend-dot" style="background:var(--accent-blue)"></span> PLTW Engineering</span>
+                <span class="legend-item"><span class="legend-dot" style="background:var(--accent-purple)"></span> Computer Science</span>
+                <span class="legend-item"><span class="legend-dot" style="background:var(--accent-green)"></span> Materials &amp; Construction</span>
+                <span class="legend-item"><span class="legend-dot" style="background:var(--accent-orange)"></span> Video &amp; Media</span>
+            </div>
+            <div class="flag-legend">
+                <span class="flag flag-pltw">PLTW</span>
+                <span class="flag flag-honors">Honors</span>
+                <span class="flag flag-ap">AP</span>
+                <span class="flag flag-capstone">Capstone</span>
+                <span style="font-size:.75rem;color:var(--gray-400);margin-left:.25rem">= course-level flags</span>
+            </div>
+
+            <!-- ──── PLTW ENGINEERING ──── -->
+            <div class="track-section">
+                <h3 class="track-title" style="border-color:var(--accent-blue)">PLTW Engineering</h3>
+                <div class="track-flow">
+                    <div class="course-card-group">
+                        <div class="course-card cc-blue">
+                            <div class="cc-flags"><span class="flag flag-pltw">PLTW</span></div>
+                            <h4>IED</h4>
+                            <span class="cc-full">Introduction to Engineering Design</span>
+                            <span class="cc-meta">Grades 9-10 &middot; 5 Cr</span>
+                            <span class="cc-level cc-level-entry">Entry Point</span>
+                            <p class="cc-desc">Design process, CAD/CAM, technical documentation, teamwork, and global impact analysis.</p>
+                        </div>
+                        <div class="course-card cc-blue">
+                            <h4>Drafting &amp; CAD</h4>
+                            <span class="cc-meta">Grades 9-12 &middot; 5 Cr &middot; No Prereq</span>
+                            <span class="cc-level cc-level-entry">Entry Point</span>
+                            <p class="cc-desc">Technical drawing, orthographic projection, isometric &amp; perspective drawing, and computer-aided design.</p>
+                        </div>
+                        <div class="course-card cc-blue">
+                            <div class="cc-flags"><span class="flag flag-pltw">PLTW</span></div>
+                            <h4>Engineering Essentials</h4>
+                            <span class="cc-meta">Grades 11-12 &middot; 5 Cr &middot; No Prereq</span>
+                            <span class="cc-level cc-level-entry">Entry Point</span>
+                            <p class="cc-desc">Broad survey of all engineering fields, careers, teamwork, and problem-solving. Great intro for upperclassmen.</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="course-card-group">
+                        <div class="course-card cc-blue">
+                            <div class="cc-flags"><span class="flag flag-pltw">PLTW</span><span class="flag flag-honors">Honors</span></div>
+                            <h4>POE</h4>
+                            <span class="cc-full">Principles of Engineering</span>
+                            <span class="cc-meta">Grades 10-12 &middot; 5 Cr</span>
+                            <p class="cc-desc">Advanced engineering principles, APPB learning, real-world design challenges. Requires IED + Algebra I.</p>
+                        </div>
+                        <div class="course-card cc-blue">
+                            <div class="cc-flags"><span class="flag flag-pltw">PLTW</span></div>
+                            <h4>CEA</h4>
+                            <span class="cc-full">Civil Engineering &amp; Architecture</span>
+                            <span class="cc-meta">Grades 10-12 &middot; 5 Cr</span>
+                            <p class="cc-desc">Residential &amp; commercial design, structural engineering, cost estimation. Requires IED or D&amp;CAD + 80 in Algebra I.</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="course-card cc-blue">
+                        <div class="cc-flags"><span class="flag flag-pltw">PLTW</span><span class="flag flag-honors">Honors</span><span class="flag flag-capstone">Capstone</span></div>
+                        <h4>Applied Research &amp; Design</h4>
+                        <span class="cc-full">Honors PLTW Capstone</span>
+                        <span class="cc-meta">Grades 11-12 &middot; 5 Cr</span>
+                        <span class="cc-level cc-level-entry">Capstone</span>
+                        <p class="cc-desc">Team-based open-ended problem solving, industry mentorship, prototype development, defense before expert panel. Requires POE or CEA.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ──── COMPUTER SCIENCE ──── -->
+            <div class="track-section">
+                <h3 class="track-title" style="border-color:var(--accent-purple)">Computer Science</h3>
+                <div class="track-flow">
+                    <div class="course-card-group">
+                        <div class="course-card cc-purple">
+                            <div class="cc-flags"><span class="flag flag-pltw">PLTW</span></div>
+                            <h4>CSE</h4>
+                            <span class="cc-full">Computer Science Essentials</span>
+                            <span class="cc-meta">Grades 9-12 &middot; 5 Cr &middot; No Prereq</span>
+                            <span class="cc-level cc-level-entry">Entry Point</span>
+                            <p class="cc-desc">Block-based to text-based programming (Python), computational thinking, collaborative projects.</p>
+                        </div>
+                        <div class="course-card cc-purple">
+                            <div class="cc-flags"><span class="flag flag-ap">AP</span></div>
+                            <h4>AP CSP</h4>
+                            <span class="cc-full">AP Computer Science Principles</span>
+                            <span class="cc-meta">Grades 10-12 &middot; 5 Cr &middot; No Prereq</span>
+                            <span class="cc-level cc-level-entry">Entry Point</span>
+                            <p class="cc-desc">College-level intro to CS — algorithms, data, abstraction, internet, and computing innovations. College Board AP exam.</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="course-card-group">
+                        <div class="course-card cc-purple">
+                            <div class="cc-flags"><span class="flag flag-pltw">PLTW</span></div>
+                            <h4>Cybersecurity</h4>
+                            <span class="cc-full">PLTW Cybersecurity</span>
+                            <span class="cc-meta">Grades 10-12 &middot; 5 Cr</span>
+                            <p class="cc-desc">Virtual labs, network security, ethical computing, and cyber infrastructure defense. Requires CSE, AP CSP, or AP CSA.</p>
+                        </div>
+                        <div class="course-card cc-purple">
+                            <div class="cc-flags"><span class="flag flag-ap">AP</span></div>
+                            <h4>AP Cybersecurity</h4>
+                            <span class="cc-full">New for 2026-27</span>
+                            <span class="cc-meta">Grades 10-12 &middot; 5 Cr</span>
+                            <p class="cc-desc">College-level cybersecurity aligned with the NICE Workforce Framework. Requires CSE, AP CSP, or AP CSA.</p>
+                        </div>
+                        <div class="course-card cc-purple">
+                            <div class="cc-flags"><span class="flag flag-ap">AP</span></div>
+                            <h4>AP CSA</h4>
+                            <span class="cc-full">AP Computer Science A</span>
+                            <span class="cc-meta">Grades 10-12 &middot; 5 Cr</span>
+                            <p class="cc-desc">Java programming — objects, methods, control structures, data collections. College Board AP exam.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ──── MATERIALS & CONSTRUCTION ──── -->
+            <div class="track-section">
+                <h3 class="track-title" style="border-color:var(--accent-green)">Materials &amp; Construction</h3>
+                <div class="track-flow">
+                    <div class="course-card-group">
+                        <div class="course-card cc-green">
+                            <h4>Mat &amp; Meth I</h4>
+                            <span class="cc-full">Materials &amp; Methods for Technology I</span>
+                            <span class="cc-meta">Grades 9-11 &middot; 5 Cr &middot; No Prereq</span>
+                            <span class="cc-level cc-level-entry">Entry Point</span>
+                            <p class="cc-desc">Hands-on exploration of wood, metals, plastics, composites, and semiconductors. Engineering design and material properties.</p>
+                        </div>
+                        <div class="course-card cc-green">
+                            <h4>Vehicular Systems &amp; Metal Fab</h4>
+                            <span class="cc-meta">Grades 10-12 &middot; 5 Cr &middot; No Prereq</span>
+                            <span class="cc-level cc-level-entry">Entry Point</span>
+                            <p class="cc-desc">Automotive diagnostics, engine systems, welding, plasma cutting, shearing, and metal fabrication projects.</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="course-card-group">
+                        <div class="course-card cc-green">
+                            <h4>Mat &amp; Meth II</h4>
+                            <span class="cc-full">Materials &amp; Methods II</span>
+                            <span class="cc-meta">Grades 10-12 &middot; 5 Cr</span>
+                            <p class="cc-desc">Advanced material families, design documentation, kinesthetic problem-solving projects. Requires Mat &amp; Meth I.</p>
+                        </div>
+                        <div class="course-card cc-green">
+                            <h4>Cabinetmaking</h4>
+                            <span class="cc-meta">Grades 10-12 &middot; 5 Cr</span>
+                            <p class="cc-desc">Advanced woodworking — independent design, professional-quality construction, power tool mastery. Requires Mat &amp; Meth I.</p>
+                        </div>
+                        <div class="course-card cc-green">
+                            <h4>Construction Tech</h4>
+                            <span class="cc-full">Construction Technology</span>
+                            <span class="cc-meta">Grades 10-12 &middot; 5 Cr</span>
+                            <p class="cc-desc">Framing, electrical, plumbing, HVAC, project planning and cost estimating. Requires Mat &amp; Meth I.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ──── VIDEO & MEDIA ──── -->
+            <div class="track-section">
+                <h3 class="track-title" style="border-color:var(--accent-orange)">Video Production &amp; Media</h3>
+                <div class="track-flow">
+                    <div class="course-card-group">
+                        <div class="course-card cc-orange">
+                            <h4>VP I</h4>
+                            <span class="cc-full">Video Production I</span>
+                            <span class="cc-meta">Grades 9-12 &middot; 5 Cr &middot; No Prereq</span>
+                            <span class="cc-level cc-level-entry">Entry Point</span>
+                            <p class="cc-desc">Fundamentals of video &amp; TV production — studio &amp; field, PSAs, news programs, narrative projects.</p>
+                        </div>
+                        <div class="course-card cc-orange">
+                            <h4>The Morning Show</h4>
+                            <span class="cc-meta">Grades 9-12 &middot; 5 Cr &middot; No Prereq</span>
+                            <span class="cc-level cc-level-entry">Entry Point</span>
+                            <p class="cc-desc">Students produce, host, and broadcast the school's daily morning television program.</p>
+                        </div>
+                        <div class="course-card cc-orange">
+                            <h4>Writing for Electronic Media</h4>
+                            <span class="cc-meta">Grades 9-12 &middot; 5 Cr &middot; No Prereq</span>
+                            <span class="cc-level cc-level-entry">Entry Point</span>
+                            <p class="cc-desc">Script writing for TV, radio, and electronic mass media — formatting, language, and creative writing.</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="course-card-group">
+                        <div class="course-card cc-orange">
+                            <h4>VP II</h4>
+                            <span class="cc-full">Video Production II</span>
+                            <span class="cc-meta">Grades 10-12 &middot; 5 Cr</span>
+                            <p class="cc-desc">School broadcasts, sports, short films, local cable channel programs. Requires VP I.</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="course-card cc-orange">
+                        <h4>VP III</h4>
+                        <span class="cc-full">Video Production III</span>
+                        <span class="cc-meta">Grades 11-12 &middot; 5 Cr</span>
+                        <p class="cc-desc">Advanced cinematography, post-production, documentaries. State &amp; national contest submissions. Requires VP II.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ═══════════ CLUBS & ACTIVITIES ═══════════
+         Grid of 4 club cards:
+         - Robotics Club (with external link to Google Sites page)
+         - STEM Night (with external link to past events page)
+         - Coding Club (placeholder — no external link yet)
+         - Film & Media Club (placeholder — no external link yet)
+         
+         TO ADD A NEW CLUB: Copy an existing .club-card div, change the
+         emoji icon, name, description, and add a .club-link if applicable.
+         ════════════════════════════════════════════════════════════ -->
+    <section class="clubs-section" id="clubs">
+        <div class="container">
+            <h2 class="section-title">Clubs &amp; Activities</h2>
+            <p class="section-desc">Get involved beyond the classroom</p>
+            <div class="clubs-grid">
+                <div class="club-card"><div class="club-icon">🤖</div><h3>Robotics Club</h3><p>Design, build, and compete with robots. Open to all grades and experience levels.</p><a href="https://sites.google.com/monroe.k12.nj.us/mths-robotics-club/home" target="_blank" rel="noopener" class="club-link">Visit Club Site →</a></div>
+                <div class="club-card"><div class="club-icon">🔬</div><h3>STEM Night</h3><p>Annual showcase of student engineering projects, demonstrations, and interactive exhibits.</p><a href="https://sites.google.com/students.monroe.k12.nj.us/pltwstemnight/home" target="_blank" rel="noopener" class="club-link">Past Events →</a></div>
+                <div class="club-card"><div class="club-icon">💻</div><h3>Coding Club</h3><p>Collaborative coding sessions, hackathons, and project-based challenges for aspiring developers.</p></div>
+                <div class="club-card"><div class="club-icon">🎬</div><h3>Film &amp; Media Club</h3><p>Student-led film projects, video competitions, and creative media production.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ FOOTER (same structure as index.html) ═══════════ -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <svg viewBox="0 0 40 40" width="26" height="26"><path d="M20 2l2.5 5.5 5.5-2.5-2 5.5L32 13l-5.5 2.5L29 21l-5.5-2.5L20 24l-2.5-5.5L12 21l2-5.5L8 13l5.5-2.5L11 5l5.5 2.5z" fill="#d4a843"/><circle cx="20" cy="13" r="5" fill="#0c1a2e" stroke="#d4a843" stroke-width="1"/></svg>
+                    <span>MTHS Industrial Arts Department</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://www.monroe.k12.nj.us/mths" target="_blank" rel="noopener">MTHS Main Site</a>
+                    <a href="https://www.pltw.org" target="_blank" rel="noopener">PLTW.org</a>
+                    <a href="index.html">Home</a>
+                </div>
+                <p class="footer-copy">&copy; 2026 Monroe Township High School · Industrial Arts Department</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!--
+═══════════════════════════════════════════════════════════════════
+FILE: index.html
+PAGE: Home (Main Landing Page)
+SITE: MTHS Industrial Arts Department
+
+WHAT THIS PAGE CONTAINS:
+1. Navigation bar (shared with about.html)
+2. Hero section — Image carousel (10 slides) + Welcome message
+3. Events carousel — Upcoming department events (expandable + Google Cal)
+4. Student Voices — Alumni testimonial carousel (7 students)
+5. Footer (shared with about.html)
+
+CONNECTED FILES:
+- style.css — All visual styling (shared with about.html)
+- script.js — All interactive behavior (shared with about.html)
+- about.html — "About Us" subpage (linked from nav and buttons)
+
+TO ADD/CHANGE IMAGES IN THE CAROUSEL:
+Replace the .slide-placeholder divs inside .carousel-track with <img> tags.
+Example: <div class="carousel-slide"><img src="images/photo1.jpg" alt="Lab"></div>
+
+TO ADD A NEW EVENT:
+Copy an existing .event-card div, change the text, and update the
+data-gcal-* attributes for Google Calendar integration.
+
+TO ADD A NEW TESTIMONIAL:
+Copy an existing .testimonial-card div and update the name, schools,
+quote text, avatar initials/color, and contact links.
+═══════════════════════════════════════════════════════════════════
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Character encoding and responsive viewport for all devices -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTHS Engineering — Monroe Township High School</title>
+    <!-- Google Fonts: Barlow Condensed (headings) + DM Sans (body text)
+         preconnect speeds up the font loading by establishing early connections -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Main stylesheet — shared between index.html and about.html -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         NAVIGATION BAR
+         Fixed to top of page. Contains:
+         - Logo (spinning gear SVG + site name) — links to home
+         - Nav links (Home, About Us) — "active" class highlights current page
+         - Hamburger button — shown only on mobile (≤700px), toggles menu
+         The navbar gains a shadow (.scrolled class) when user scrolls past 40px.
+         ═══════════════════════════════════════════════════════════ -->
+    <nav class="main-nav" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">
+                <svg class="nav-gear" viewBox="0 0 40 40" width="32" height="32">
+                    <path d="M20 2l2.5 5.5 5.5-2.5-2 5.5L32 13l-5.5 2.5L29 21l-5.5-2.5L20 24l-2.5-5.5L12 21l2-5.5L8 13l5.5-2.5L11 5l5.5 2.5z" fill="#d4a843"/>
+                    <circle cx="20" cy="13" r="5" fill="#0c1a2e" stroke="#d4a843" stroke-width="1.5"/>
+                </svg>
+                <span>MTHS Engineering</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <div class="nav-dropdown" id="courseDropdown">
+                    <span class="nav-link nav-dropdown-toggle" id="courseDropdownToggle">Course Highlights</span>
+                    <div class="nav-dropdown-menu">
+                        <div class="nav-dropdown-menu-inner">
+                            <a href="ied.html"><div class="dd-icon">IED</div><div class="dd-text"><span>Intro to Engineering Design</span><span>PLTW &middot; Grades 9-10</span></div></a>
+                            <a href="poe.html"><div class="dd-icon">POE</div><div class="dd-text"><span>Principles of Engineering</span><span>PLTW &middot; Honors &middot; Grades 10-12</span></div></a>
+                            <a href="capstone.html"><div class="dd-icon">CAP</div><div class="dd-text"><span>PLTW Capstone</span><span>Honors &middot; Capstone &middot; Grades 11-12</span></div></a>
+                            <a href="apcsp.html"><div class="dd-icon">CSP</div><div class="dd-text"><span>AP Computer Science Principles</span><span>AP &middot; No Prereq &middot; Grades 10-12</span></div></a>
+                            <a href="apcyber.html"><div class="dd-icon">CYB</div><div class="dd-text"><span>AP Cybersecurity</span><span>AP &middot; New 2026-27 &middot; Grades 10-12</span></div></a>
+                            <a href="vehicular.html"><div class="dd-icon">VEH</div><div class="dd-text"><span>Vehicular Systems &amp; Metal Fab</span><span>No Prereq &middot; Grades 10-12</span></div></a>
+                            <a href="morning.html"><div class="dd-icon">TMS</div><div class="dd-text"><span>The Morning Show</span><span>No Prereq &middot; Grades 9-12</span></div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ═══════════ HERO: Carousel + Welcome ═══════════ -->
+    <section class="hero" id="home">
+        <div class="container hero-inner">
+
+            <!-- LEFT: IMAGE CAROUSEL + DOTS -->
+            <div class="hero-carousel-col">
+                <div class="carousel-wrapper" id="heroCarousel">
+                    <div class="carousel-track" id="heroTrack">
+                        <div class="carousel-slide"><div class="slide-placeholder slide-1"><div class="slide-number">01</div><div class="slide-label">Engineering Design Lab</div><div class="slide-caption">Replace with your photo</div></div></div>
+                        <div class="carousel-slide"><div class="slide-placeholder slide-2"><div class="slide-number">02</div><div class="slide-label">Robotics Workshop</div><div class="slide-caption">Replace with your photo</div></div></div>
+                        <div class="carousel-slide"><div class="slide-placeholder slide-3"><div class="slide-number">03</div><div class="slide-label">3D Printing Station</div><div class="slide-caption">Replace with your photo</div></div></div>
+                        <div class="carousel-slide"><div class="slide-placeholder slide-4"><div class="slide-number">04</div><div class="slide-label">Woodworking &amp; Materials</div><div class="slide-caption">Replace with your photo</div></div></div>
+                        <div class="carousel-slide"><div class="slide-placeholder slide-5"><div class="slide-number">05</div><div class="slide-label">Video Production Studio</div><div class="slide-caption">Replace with your photo</div></div></div>
+                        <div class="carousel-slide"><div class="slide-placeholder slide-6"><div class="slide-number">06</div><div class="slide-label">STEM Night Showcase</div><div class="slide-caption">Replace with your photo</div></div></div>
+                        <div class="carousel-slide"><div class="slide-placeholder slide-7"><div class="slide-number">07</div><div class="slide-label">Computer Science Lab</div><div class="slide-caption">Replace with your photo</div></div></div>
+                        <div class="carousel-slide"><div class="slide-placeholder slide-8"><div class="slide-number">08</div><div class="slide-label">CAD &amp; Drafting</div><div class="slide-caption">Replace with your photo</div></div></div>
+                        <div class="carousel-slide"><div class="slide-placeholder slide-9"><div class="slide-number">09</div><div class="slide-label">Student Projects</div><div class="slide-caption">Replace with your photo</div></div></div>
+                        <div class="carousel-slide"><div class="slide-placeholder slide-10"><div class="slide-number">10</div><div class="slide-label">Construction Tech</div><div class="slide-caption">Replace with your photo</div></div></div>
+                    </div>
+                    <button class="carousel-btn carousel-prev" id="heroPrev" aria-label="Previous slide">&#8249;</button>
+                    <button class="carousel-btn carousel-next" id="heroNext" aria-label="Next slide">&#8250;</button>
+                </div>
+                <div class="carousel-dots" id="heroDots"></div>
+            </div>
+
+            <!-- ─── RIGHT SIDE: WELCOME MESSAGE ───
+                 Contains the "Welcome!" heading, a 2-sentence intro blurb,
+                 and two CTA buttons linking to the About Us page. -->
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome!</h1>
+                <p class="hero-blurb">The Industrial Arts Department at Monroe Township High School offers five dynamic pathways — from PLTW-certified engineering to AP computer science, hands-on construction, and professional video production. Explore what we build.</p>
+                <div class="hero-actions">
+                    <a href="about.html" class="btn btn-primary">About Us</a>
+                    <a href="about.html#classes" class="btn btn-outline">View Courses</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-divider">
+            <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,100 L0,50 Q360,0 720,50 Q1080,100 1440,50 L1440,100 Z" fill="var(--white)"/></svg>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         EVENTS CAROUSEL
+         Scrolling carousel of upcoming department events.
+         - Shows 3 cards at a time on desktop (JS controls card widths)
+         - Auto-scrolls every 5 seconds, pauses on mouse hover
+         - Click any card to expand it and reveal full details
+         - Each card has a "Add to Google Calendar" button in its details
+         
+         GOOGLE CALENDAR INTEGRATION:
+         Each card has data-gcal-* attributes that the addToGCal()
+         function in script.js reads to build a Google Calendar URL.
+         Date format is YYYYMMDD (e.g., "20260515" = May 15, 2026).
+         
+         TO ADD A NEW EVENT: Copy an existing .event-card div and update:
+         - data-gcal-title, data-gcal-date, data-gcal-end
+         - data-gcal-details, data-gcal-location
+         - The visible text (event-date, h3, event-summary, event-details)
+         ═══════════════════════════════════════════════════════════ -->
+<section class="events-section" id="events">
+    <div class="container">
+        <h2 class="section-title">Upcoming Events</h2>
+        <p class="section-desc">Competitions, showcases, and activities happening in our department</p>
+        <div class="events-carousel-wrap">
+            <div class="events-track-outer">
+                <div class="events-track" id="eventsTrack">
+
+                    <div class="event-card" data-gcal-title="PLTW STEM Night" data-gcal-date="20260515" data-gcal-end="20260515" data-gcal-details="Annual showcase of student engineering projects at Monroe Township High School. Interactive demos, prototypes, and presentations open to the community." data-gcal-location="Monroe Township High School, Monroe Township, NJ">
+                        <div class="event-date">Spring 2026</div>
+                        <h3>PLTW STEM Night</h3>
+                        <p class="event-summary">Annual showcase of student engineering projects and interactive demos.</p>
+                        <span class="event-tag tag-showcase">Showcase</span>
+                        <div class="event-expand-hint"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        <div class="event-details">
+                            <p>Students from all five Industrial Arts pathways present their best work — from PLTW engineering prototypes to video production reels and construction projects. Families, prospective students, and community members are invited to explore hands-on stations and talk with students and faculty.</p>
+                            <a class="gcal-btn" onclick="addToGCal(this.closest('.event-card'));event.stopPropagation()" href="javascript:void(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Add to Google Calendar</a>
+                        </div>
+                    </div>
+
+                    <div class="event-card" data-gcal-title="Robotics Regional Competition" data-gcal-date="20260418" data-gcal-end="20260419" data-gcal-details="MTHS Robotics Club competes against schools from across the region in the annual spring robotics challenge." data-gcal-location="Monroe Township, NJ">
+                        <div class="event-date">April 2026</div>
+                        <h3>Robotics Regional Competition</h3>
+                        <p class="event-summary">MTHS Robotics Club competes in the annual spring regional challenge.</p>
+                        <span class="event-tag tag-competition">Competition</span>
+                        <div class="event-expand-hint"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        <div class="event-details">
+                            <p>Our Robotics Club team faces off against schools from across the region. Students design, build, and program their robots to complete timed challenges. Come cheer on the Falcons! Check the Robotics Club site for the latest schedule and results.</p>
+                            <a class="gcal-btn" onclick="addToGCal(this.closest('.event-card'));event.stopPropagation()" href="javascript:void(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Add to Google Calendar</a>
+                        </div>
+                    </div>
+
+                    <div class="event-card" data-gcal-title="AP Exam Season — CS &amp; Cybersecurity" data-gcal-date="20260504" data-gcal-end="20260515" data-gcal-details="AP Computer Science Principles, AP Computer Science A, and the new AP Cybersecurity exams. Study hard and good luck!" data-gcal-location="Monroe Township High School, Monroe Township, NJ">
+                        <div class="event-date">May 2026</div>
+                        <h3>AP Exam Season</h3>
+                        <p class="event-summary">AP CSP, AP CSA, and the new AP Cybersecurity exams. Good luck!</p>
+                        <span class="event-tag tag-class">Academics</span>
+                        <div class="event-expand-hint"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        <div class="event-details">
+                            <p>This year marks the debut of the AP Cybersecurity exam alongside AP Computer Science Principles and AP Computer Science A. Students who've been preparing all year will put their skills to the test. Talk to Mrs. Gauri or your AP instructor if you have questions about exam day logistics.</p>
+                            <a class="gcal-btn" onclick="addToGCal(this.closest('.event-card'));event.stopPropagation()" href="javascript:void(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Add to Google Calendar</a>
+                        </div>
+                    </div>
+
+                    <div class="event-card" data-gcal-title="Coding Club Weekly Meetup" data-gcal-date="20260410" data-gcal-end="20260410" data-gcal-details="Weekly collaborative coding sessions, hackathon prep, and project showcases. All skill levels welcome. Meets every week." data-gcal-location="Monroe Township High School, Computer Lab">
+                        <div class="event-date">Ongoing</div>
+                        <h3>Coding Club Meetups</h3>
+                        <p class="event-summary">Weekly coding sessions, hackathon prep, and project showcases.</p>
+                        <span class="event-tag tag-club">Club</span>
+                        <div class="event-expand-hint"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        <div class="event-details">
+                            <p>Open to all skill levels — whether you're just starting out or building full-stack apps. Bring your laptop, pick a project, and code with friends. Upcoming focus: preparing for the spring hackathon and wrapping up club portfolio projects.</p>
+                            <a class="gcal-btn" onclick="addToGCal(this.closest('.event-card'));event.stopPropagation()" href="javascript:void(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Add to Google Calendar</a>
+                        </div>
+                    </div>
+
+                    <div class="event-card" data-gcal-title="Senior Capstone Presentations" data-gcal-date="20260520" data-gcal-end="20260522" data-gcal-details="Honors Applied Research and Design students present and defend their year-long engineering projects before a panel of industry professionals." data-gcal-location="Monroe Township High School, Monroe Township, NJ">
+                        <div class="event-date">May 2026</div>
+                        <h3>Senior Capstone Presentations</h3>
+                        <p class="event-summary">Honors Capstone students defend their year-long engineering projects.</p>
+                        <span class="event-tag tag-showcase">Showcase</span>
+                        <div class="event-expand-hint"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        <div class="event-details">
+                            <p>The culminating event of the PLTW Engineering sequence. Senior teams present original engineering solutions — from concept through prototype — to an external panel of industry professionals and higher education partners. A must-see for underclassmen considering the engineering track.</p>
+                            <a class="gcal-btn" onclick="addToGCal(this.closest('.event-card'));event.stopPropagation()" href="javascript:void(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Add to Google Calendar</a>
+                        </div>
+                    </div>
+
+                    <div class="event-card" data-gcal-title="Film Festival Submissions" data-gcal-date="20260501" data-gcal-end="20260530" data-gcal-details="Video Production III students submit short films, documentaries, and PSAs to state and national contests." data-gcal-location="Monroe Township High School, Monroe Township, NJ">
+                        <div class="event-date">Spring 2026</div>
+                        <h3>Film Festival Submissions</h3>
+                        <p class="event-summary">VP III students submit short films and docs to state &amp; national contests.</p>
+                        <span class="event-tag tag-competition">Competition</span>
+                        <div class="event-expand-hint"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        <div class="event-details">
+                            <p>Advanced Video Production students have been working all year on dramatic scenes, short films, documentaries, and commercials. Their best pieces are submitted to recognized state and national competitions. Stay tuned for screening dates where you can watch the final cuts.</p>
+                            <a class="gcal-btn" onclick="addToGCal(this.closest('.event-card'));event.stopPropagation()" href="javascript:void(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Add to Google Calendar</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <button class="events-btn events-prev" id="eventsPrev" aria-label="Previous">&#8249;</button>
+            <button class="events-btn events-next" id="eventsNext" aria-label="Next">&#8250;</button>
+        </div>
+    </div>
+</section>
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         STUDENT VOICES / TESTIMONIALS
+         Carousel of 7 alumni testimonial cards on a dark navy background.
+         Same scrolling behavior as events carousel (3 visible, 5s auto).
+         
+         Each card contains:
+         - Circular SVG avatar with student initials (colored by pathway)
+         - Student name + "MTHS '23 · College '27" education line
+         - 2-3 sentence testimonial quote
+         - Email and LinkedIn contact icons
+         
+         NOTE: All names, quotes, emails, and LinkedIn links are MOCK DATA.
+         Replace with real student information when available.
+         
+         TO ADD A NEW TESTIMONIAL: Copy an existing .testimonial-card div
+         and update the initials, name, schools, quote, and contact links.
+         ═══════════════════════════════════════════════════════════ -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="container">
+            <h2 class="section-title" style="color:var(--gold)">Student Voices</h2>
+            <p class="section-desc" style="color:var(--gray-300)">Hear from alumni about how the Industrial Arts Department shaped their path</p>
+
+            <div class="testimonials-carousel-wrap">
+                <div class="testimonials-track-outer">
+                    <div class="testimonials-track" id="testimonialsTrack">
+
+                        <div class="testimonial-card">
+                            <div class="testimonial-top">
+                                <div class="testimonial-avatar"><svg viewBox="0 0 60 60" width="60" height="60"><circle cx="30" cy="30" r="29" fill="var(--navy-surface)" stroke="var(--gold)" stroke-width="1.5"/><circle cx="30" cy="24" r="9" fill="var(--gold)" opacity=".2"/><path d="M14 50a16 16 0 0 1 32 0" fill="var(--gold)" opacity=".15"/><text x="30" y="34" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="700" fill="var(--gold)">JR</text></svg></div>
+                                <div class="testimonial-info">
+                                    <h3>James Rivera</h3>
+                                    <span class="testimonial-schools">MTHS '23 · Rutgers '27</span>
+                                </div>
+                            </div>
+                            <p class="testimonial-quote">Taking IED and POE completely changed how I approach problem-solving. The hands-on prototyping experience gave me a huge head start in my mechanical engineering program. I still use the CAD skills I learned in Mr. McLaughlin's class every week.</p>
+                            <div class="testimonial-contact">
+                                <a href="mailto:jrivera@example.com" class="testimonial-link" title="Email James"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg></a>
+                                <a href="javascript:void(0)" class="testimonial-link" title="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="testimonial-top">
+                                <div class="testimonial-avatar"><svg viewBox="0 0 60 60" width="60" height="60"><circle cx="30" cy="30" r="29" fill="var(--navy-surface)" stroke="var(--accent-purple)" stroke-width="1.5"/><circle cx="30" cy="24" r="9" fill="var(--accent-purple)" opacity=".2"/><path d="M14 50a16 16 0 0 1 32 0" fill="var(--accent-purple)" opacity=".15"/><text x="30" y="34" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="700" fill="var(--accent-purple)">SP</text></svg></div>
+                                <div class="testimonial-info">
+                                    <h3>Shreya Patel</h3>
+                                    <span class="testimonial-schools">MTHS '22 · Georgia Tech '26</span>
+                                </div>
+                            </div>
+                            <p class="testimonial-quote">AP Computer Science Principles opened my eyes to how much I loved coding. Mrs. Gauri pushed us to think beyond just syntax — we learned to design real solutions. That foundation carried me straight into my CS degree at Georgia Tech.</p>
+                            <div class="testimonial-contact">
+                                <a href="mailto:spatel@example.com" class="testimonial-link" title="Email Shreya"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg></a>
+                                <a href="javascript:void(0)" class="testimonial-link" title="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="testimonial-top">
+                                <div class="testimonial-avatar"><svg viewBox="0 0 60 60" width="60" height="60"><circle cx="30" cy="30" r="29" fill="var(--navy-surface)" stroke="var(--accent-green)" stroke-width="1.5"/><circle cx="30" cy="24" r="9" fill="var(--accent-green)" opacity=".2"/><path d="M14 50a16 16 0 0 1 32 0" fill="var(--accent-green)" opacity=".15"/><text x="30" y="34" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="700" fill="var(--accent-green)">MC</text></svg></div>
+                                <div class="testimonial-info">
+                                    <h3>Marcus Chen</h3>
+                                    <span class="testimonial-schools">MTHS '24 · NJIT '28</span>
+                                </div>
+                            </div>
+                            <p class="testimonial-quote">Materials &amp; Methods gave me a real understanding of how things are built from raw materials to finished products. Cabinetmaking was the highlight of my four years — I designed and built a full entertainment center that my family still uses today.</p>
+                            <div class="testimonial-contact">
+                                <a href="mailto:mchen@example.com" class="testimonial-link" title="Email Marcus"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg></a>
+                                <a href="javascript:void(0)" class="testimonial-link" title="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="testimonial-top">
+                                <div class="testimonial-avatar"><svg viewBox="0 0 60 60" width="60" height="60"><circle cx="30" cy="30" r="29" fill="var(--navy-surface)" stroke="var(--accent-orange)" stroke-width="1.5"/><circle cx="30" cy="24" r="9" fill="var(--accent-orange)" opacity=".2"/><path d="M14 50a16 16 0 0 1 32 0" fill="var(--accent-orange)" opacity=".15"/><text x="30" y="34" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="700" fill="var(--accent-orange)">OW</text></svg></div>
+                                <div class="testimonial-info">
+                                    <h3>Olivia Williams</h3>
+                                    <span class="testimonial-schools">MTHS '23 · NYU Tisch '27</span>
+                                </div>
+                            </div>
+                            <p class="testimonial-quote">Video Production I through III taught me everything from lighting to post-production editing. We submitted our short film to a state competition and placed third. That portfolio piece is what got me into Tisch's film program.</p>
+                            <div class="testimonial-contact">
+                                <a href="mailto:owilliams@example.com" class="testimonial-link" title="Email Olivia"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg></a>
+                                <a href="javascript:void(0)" class="testimonial-link" title="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="testimonial-top">
+                                <div class="testimonial-avatar"><svg viewBox="0 0 60 60" width="60" height="60"><circle cx="30" cy="30" r="29" fill="var(--navy-surface)" stroke="var(--accent-blue)" stroke-width="1.5"/><circle cx="30" cy="24" r="9" fill="var(--accent-blue)" opacity=".2"/><path d="M14 50a16 16 0 0 1 32 0" fill="var(--accent-blue)" opacity=".15"/><text x="30" y="34" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="700" fill="var(--accent-blue)">DK</text></svg></div>
+                                <div class="testimonial-info">
+                                    <h3>Daniel Kim</h3>
+                                    <span class="testimonial-schools">MTHS '24 · Stevens '28</span>
+                                </div>
+                            </div>
+                            <p class="testimonial-quote">The Honors Capstone was the most challenging and rewarding experience of high school. Our team built a working prototype from scratch and presented it to real engineers. That experience taught me more about teamwork than any textbook ever could.</p>
+                            <div class="testimonial-contact">
+                                <a href="mailto:dkim@example.com" class="testimonial-link" title="Email Daniel"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg></a>
+                                <a href="javascript:void(0)" class="testimonial-link" title="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="testimonial-top">
+                                <div class="testimonial-avatar"><svg viewBox="0 0 60 60" width="60" height="60"><circle cx="30" cy="30" r="29" fill="var(--navy-surface)" stroke="var(--accent-red)" stroke-width="1.5"/><circle cx="30" cy="24" r="9" fill="var(--accent-red)" opacity=".2"/><path d="M14 50a16 16 0 0 1 32 0" fill="var(--accent-red)" opacity=".15"/><text x="30" y="34" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="700" fill="var(--accent-red)">AT</text></svg></div>
+                                <div class="testimonial-info">
+                                    <h3>Aisha Thompson</h3>
+                                    <span class="testimonial-schools">MTHS '25 · Penn State '29</span>
+                                </div>
+                            </div>
+                            <p class="testimonial-quote">Cybersecurity was unlike any class I'd taken before — we actually broke into virtual networks to learn how to defend them. Between that and AP CSA, I felt completely prepared walking into my college cybersecurity courses on day one.</p>
+                            <div class="testimonial-contact">
+                                <a href="mailto:athompson@example.com" class="testimonial-link" title="Email Aisha"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg></a>
+                                <a href="javascript:void(0)" class="testimonial-link" title="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="testimonial-top">
+                                <div class="testimonial-avatar"><svg viewBox="0 0 60 60" width="60" height="60"><circle cx="30" cy="30" r="29" fill="var(--navy-surface)" stroke="var(--gold-light)" stroke-width="1.5"/><circle cx="30" cy="24" r="9" fill="var(--gold-light)" opacity=".2"/><path d="M14 50a16 16 0 0 1 32 0" fill="var(--gold-light)" opacity=".15"/><text x="30" y="34" text-anchor="middle" font-size="16" font-family="Barlow Condensed" font-weight="700" fill="var(--gold-light)">EM</text></svg></div>
+                                <div class="testimonial-info">
+                                    <h3>Ethan Morales</h3>
+                                    <span class="testimonial-schools">MTHS '22 · Rowan '26</span>
+                                </div>
+                            </div>
+                            <p class="testimonial-quote">I came into Construction Tech not knowing which end of a hammer to hold, and left with real skills in framing, electrical, and project planning. That class gave me the confidence to pursue civil engineering and I've never looked back.</p>
+                            <div class="testimonial-contact">
+                                <a href="mailto:emorales@example.com" class="testimonial-link" title="Email Ethan"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg></a>
+                                <a href="javascript:void(0)" class="testimonial-link" title="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <button class="events-btn events-prev" id="testPrev" aria-label="Previous">&#8249;</button>
+                <button class="events-btn events-next" id="testNext" aria-label="Next">&#8250;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         FOOTER
+         Shared design across all pages. Contains:
+         - Gear logo + "MTHS Industrial Arts Department" text
+         - External links (MTHS main site, PLTW.org, About Us page)
+         - Copyright notice
+         ═══════════════════════════════════════════════════════════ -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <svg viewBox="0 0 40 40" width="26" height="26"><path d="M20 2l2.5 5.5 5.5-2.5-2 5.5L32 13l-5.5 2.5L29 21l-5.5-2.5L20 24l-2.5-5.5L12 21l2-5.5L8 13l5.5-2.5L11 5l5.5 2.5z" fill="#d4a843"/><circle cx="20" cy="13" r="5" fill="#0c1a2e" stroke="#d4a843" stroke-width="1"/></svg>
+                    <span>MTHS Industrial Arts Department</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://www.monroe.k12.nj.us/mths" target="_blank" rel="noopener">MTHS Main Site</a>
+                    <a href="https://www.pltw.org" target="_blank" rel="noopener">PLTW.org</a>
+                    <a href="about.html">About Us</a>
+                </div>
+                <p class="footer-copy">&copy; 2026 Monroe Township High School · Industrial Arts Department</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main JavaScript file — shared between index.html and about.html.
+         Handles: carousels, nav, scroll effects, event expand, Google Calendar -->
+    <script src="script.js"></script>
+</body>
+</html>
