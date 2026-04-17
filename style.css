@@ -608,7 +608,7 @@ h1,h2,h3,h4{font-family:var(--font-heading);font-weight:700;line-height:1.15;let
 .course-carousel-wrap{position:relative;border-radius:var(--radius-lg);overflow:hidden;border:2px solid var(--gray-200)}
 .course-carousel-track{display:flex;transition:transform .5s var(--ease)}
 .course-carousel-slide{min-width:100%;position:relative}
-.course-carousel-slide img,.course-slide-placeholder{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.course-carousel-slide img,.course-slide-placeholder{width:100%;aspect-ratio:16/7;object-fit:cover;display:block}
 .course-slide-placeholder{background:var(--navy-mid);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:var(--gray-400);font-size:.8rem}
 .course-slide-placeholder .slide-num{font-family:var(--font-heading);font-size:2rem;font-weight:800;opacity:.15}
 .course-carousel-caption{position:absolute;bottom:0;left:0;right:0;padding:.6rem 1rem;background:linear-gradient(transparent,rgba(12,26,46,.85));color:var(--white);font-size:.78rem;font-family:var(--font-heading);letter-spacing:.03em}
