@@ -79,7 +79,7 @@
    and establishes base typography for the entire site.
    ───────────────────────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
+html{font-size:16px;scroll-behavior:smooth;scroll-padding-top:72px}
 body{font-family:var(--font-body);color:var(--text);background:var(--white);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
@@ -529,6 +529,8 @@ h1,h2,h3,h4{font-family:var(--font-heading);font-weight:700;line-height:1.15;let
    Faculty grid goes to 2 columns. Events carousel uses less padding.
    ───────────────────────────────────────────────────────────────── */
 @media(max-width:900px){
+    html{font-size:15px}
+    .container{padding:0 1.25rem}
     .hero-inner{grid-template-columns:1fr;text-align:center;gap:1.5rem}
     .hero-carousel-col{max-width:100%;margin:0 auto}
     .carousel-wrapper{height:300px;padding-bottom:0;max-height:none}
@@ -542,20 +544,7 @@ h1,h2,h3,h4{font-family:var(--font-heading);font-weight:700;line-height:1.15;let
 @media(max-width:700px){
     .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:var(--navy);flex-direction:column;padding:1rem;border-top:1px solid rgba(212,168,67,.15);box-shadow:var(--shadow-lg)}
     .nav-links.open{display:flex}
-    /* HAMBURGER MENU — hidden by default (display:none).
-   Shown on mobile via @media(max-width:700px).
-   Three <span> bars animate into an X when .open class is toggled by JS. */
-.hamburger{display:flex}
-    .hero{padding:76px 0 2rem}
-    .hero-inner{gap:1rem}
-    .hero-carousel-col{max-width:100%}
-    .carousel-wrapper{height:260px;padding-bottom:0;max-height:none}
-    .hero-title{font-size:2rem}
-    .hero-blurb{font-size:.92rem}
-    .faculty-grid .faculty-card{width:calc(50% - 1rem);max-width:260px}
-    .flowchart-legend{flex-direction:column;align-items:flex-start}
-    .events-carousel-wrap{padding:0 2rem}
-    .events-section{padding:2.5rem 0 2rem}
+    .hamburger{display:flex}
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -591,12 +580,13 @@ h1,h2,h3,h4{font-family:var(--font-heading);font-weight:700;line-height:1.15;let
 .course-nav-link:hover,.course-nav-link.active{color:var(--gold);background:rgba(212,168,67,.1)}
 
 /* Individual course section */
-.course-section{padding:4rem 0 3rem;border-bottom:1px solid var(--gray-200)}
+
+.course-section{padding:4rem 0 3rem;padding-top:7rem;scroll-margin-top:112px;border-bottom:1px solid var(--gray-200)}
 .course-section:nth-child(even){background:var(--cream)}
 
-/* Course header — title + pathway badge */
-.course-header{text-align:center;margin-bottom:2.5rem}
-.course-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--navy);margin-bottom:.35rem}
+/* Course header — title + pathway badge (used when no course-hero) */
+.course-header{text-align:center;margin-bottom:2.5rem;scroll-margin-top:112px}
+.course-header h2{font-size:clamp(2rem,4vw,3rem);font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--navy);margin-bottom:.35rem}
 .course-header .course-subtitle{font-size:.95rem;color:var(--text-muted);max-width:650px;margin:0 auto .75rem}
 .course-header .cc-flags{position:static;display:flex;justify-content:center;gap:.3rem}
 
@@ -608,7 +598,7 @@ h1,h2,h3,h4{font-family:var(--font-heading);font-weight:700;line-height:1.15;let
 .course-carousel-wrap{position:relative;border-radius:var(--radius-lg);overflow:hidden;border:2px solid var(--gray-200)}
 .course-carousel-track{display:flex;transition:transform .5s var(--ease)}
 .course-carousel-slide{min-width:100%;position:relative}
-.course-carousel-slide img,.course-slide-placeholder{width:100%;aspect-ratio:16/7;object-fit:cover;display:block}
+.course-carousel-slide img,.course-slide-placeholder{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
 .course-slide-placeholder{background:var(--navy-mid);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:var(--gray-400);font-size:.8rem}
 .course-slide-placeholder .slide-num{font-family:var(--font-heading);font-size:2rem;font-weight:800;opacity:.15}
 .course-carousel-caption{position:absolute;bottom:0;left:0;right:0;padding:.6rem 1rem;background:linear-gradient(transparent,rgba(12,26,46,.85));color:var(--white);font-size:.78rem;font-family:var(--font-heading);letter-spacing:.03em}
@@ -621,11 +611,11 @@ h1,h2,h3,h4{font-family:var(--font-heading);font-weight:700;line-height:1.15;let
 
 /* Course detail blocks */
 .course-detail-block{margin-bottom:2rem}
-.course-detail-block h3{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}
+.course-detail-block h3{font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:.8rem;display:flex;align-items:center;gap:.4rem}
 .course-detail-block h3 svg{flex-shrink:0}
-.course-detail-block p,.course-detail-block li{font-size:.88rem;color:var(--text-muted);line-height:1.65}
+.course-detail-block p,.course-detail-block li{font-size:1rem;color:var(--text-muted);line-height:1.85}
 .course-detail-block ul{list-style:none;padding:0}
-.course-detail-block ul li{padding:.3rem 0 .3rem 1.2rem;position:relative}
+.course-detail-block ul li{padding:.45rem 0 .45rem 1.2rem;position:relative}
 .course-detail-block ul li::before{content:'▸';position:absolute;left:0;color:var(--gold);font-weight:700}
 
 /* Course teacher card */
@@ -661,5 +651,23 @@ h1,h2,h3,h4{font-family:var(--font-heading);font-weight:700;line-height:1.15;let
 }
 @media(max-width:700px){
     .course-nav{top:64px}
+}
+@media(max-width:600px){
+    html{font-size:14px}
+    .container{padding:0 1rem}
+    .hero{padding:76px 0 2rem}
+    .hero-inner{gap:1rem}
+    .hero-carousel-col{max-width:100%}
+    .carousel-wrapper{height:260px;padding-bottom:0;max-height:none}
+    .hero-title{font-size:2rem}
+    .hero-blurb{font-size:.92rem}
+    .faculty-grid .faculty-card{width:calc(50% - 1rem);max-width:260px}
+    .flowchart-legend{flex-direction:column;align-items:flex-start}
+    .events-carousel-wrap{padding:0 2rem}
+    .events-section{padding:2.5rem 0 2rem}
     .course-testimonials-wrap,.course-highlights-wrap{padding:0 1.5rem}
+}
+@media(min-width:1400px){
+    html{font-size:17px}
+    .container{max-width:1380px;padding:0 2rem}
 }
