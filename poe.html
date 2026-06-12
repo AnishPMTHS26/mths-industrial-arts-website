@@ -3,154 +3,516 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Honors Principles of Engineering (POE) — MTHS Industrial Arts Department</title>
+    <title>Honors Principles of Engineering (PLTW-POE) | MTHS Industrial Arts Department</title>
+    <meta name="description" content="Honors Principles of Engineering (PLTW-POE) at MTHS: a hands-on survey of mechanical, electrical, and civil engineering. Grades 10–12; requires IED and Algebra I.">
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <nav class="main-nav" id="navbar"><div class="nav-inner">
-        <a href="index.html" class="nav-brand"><svg class="nav-gear" viewBox="0 0 40 40" width="32" height="32"><path d="M20 2l2.5 5.5 5.5-2.5-2 5.5L32 13l-5.5 2.5L29 21l-5.5-2.5L20 24l-2.5-5.5L12 21l2-5.5L8 13l5.5-2.5L11 5l5.5 2.5z" fill="#d4a843"/><circle cx="20" cy="13" r="5" fill="#0c1a2e" stroke="#d4a843" stroke-width="1.5"/></svg><span>MTHS Engineering</span></a>
-        <div class="nav-links" id="navLinks">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="about.html" class="nav-link">About Us</a>
-            <div class="nav-dropdown" id="courseDropdown">
-                <span class="nav-link nav-dropdown-toggle active" id="courseDropdownToggle">Course Highlights</span>
-                <div class="nav-dropdown-menu">
-                    <div class="nav-dropdown-menu-inner">
-                        <a href="ied.html"><div class="dd-icon">IED</div><div class="dd-text"><span>Intro to Engineering Design</span><span>PLTW &middot; Grades 9-10</span></div></a>
-                        <a href="poe.html"><div class="dd-icon">POE</div><div class="dd-text"><span>Principles of Engineering</span><span>PLTW &middot; Honors &middot; Grades 10-12</span></div></a>
-                        <a href="capstone.html"><div class="dd-icon">CAP</div><div class="dd-text"><span>PLTW Capstone</span><span>Honors &middot; Capstone &middot; Grades 11-12</span></div></a>
-                        <a href="apcsp.html"><div class="dd-icon">CSP</div><div class="dd-text"><span>AP Computer Science Principles</span><span>AP &middot; No Prereq &middot; Grades 10-12</span></div></a>
-                        <a href="apcyber.html"><div class="dd-icon">CYB</div><div class="dd-text"><span>AP Cybersecurity</span><span>AP &middot; New 2026-27 &middot; Grades 10-12</span></div></a>
-                        <a href="vehicular.html"><div class="dd-icon">VEH</div><div class="dd-text"><span>Vehicular Systems &amp; Metal Fab</span><span>No Prereq &middot; Grades 10-12</span></div></a>
-                        <a href="morning.html"><div class="dd-icon">TMS</div><div class="dd-text"><span>The Morning Show</span><span>No Prereq &middot; Grades 9-12</span></div></a>
+
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <div id="scrollProgress" aria-hidden="true"></div>
+
+    <!-- ════════════════════════════════════════════════════════════
+         NAVIGATION  (shared block — keep in sync across all pages)
+         ════════════════════════════════════════════════════════════ -->
+    <header class="site-nav">
+        <div class="container nav-inner">
+
+            <a class="brand" href="index.html" aria-label="MTHS Industrial Arts Department — home">
+                <svg class="brand-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3.4"></circle>
+                    <circle cx="12" cy="12" r="7"></circle>
+                    <path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"></path>
+                </svg>
+                <span class="brand-text">
+                    <span class="brand-top">MTHS</span>
+                    <span class="brand-sub">Industrial Arts Department</span>
+                </span>
+            </a>
+
+            <nav class="nav-links" id="primaryNav" aria-label="Primary">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="about.html">About</a>
+
+                <div class="nav-dropdown">
+                    <button class="nav-link" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="coursesMenu">
+                        Courses
+                        <svg class="nav-caret" viewBox="0 0 24 24" width="0.85em" height="0.85em" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M6 9l6 6 6-6"></path>
+                        </svg>
+                    </button>
+
+                    <div class="nav-dropdown-menu" id="coursesMenu">
+                        <a class="dropdown-item" href="ied.html" style="--chip: var(--pw-eng);">
+                            <span class="dropdown-abbr" aria-hidden="true">IED</span>
+                            <div>
+                                <h4>Intro to Engineering Design</h4>
+                                <p>PLTW &middot; Grades 9&ndash;10</p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="poe.html" style="--chip: var(--pw-eng);">
+                            <span class="dropdown-abbr" aria-hidden="true">POE</span>
+                            <div>
+                                <h4>Principles of Engineering</h4>
+                                <p>PLTW &middot; Honors &middot; Grades 10&ndash;12</p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="capstone.html" style="--chip: var(--pw-eng);">
+                            <span class="dropdown-abbr" aria-hidden="true">CAP</span>
+                            <div>
+                                <h4>Engineering Capstone</h4>
+                                <p>Honors &middot; Capstone &middot; Grades 11&ndash;12</p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="apcsp.html" style="--chip: var(--pw-cs);">
+                            <span class="dropdown-abbr" aria-hidden="true">CSP</span>
+                            <div>
+                                <h4>AP Computer Science Principles</h4>
+                                <p>AP &middot; No Prereq &middot; Grades 10&ndash;12</p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="apcyber.html" style="--chip: var(--pw-cs);">
+                            <span class="dropdown-abbr" aria-hidden="true">CYB</span>
+                            <div>
+                                <h4>AP Cybersecurity</h4>
+                                <p>AP &middot; New 2026&ndash;27 &middot; Grades 10&ndash;12</p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="vehicular.html" style="--chip: var(--pw-mat);">
+                            <span class="dropdown-abbr" aria-hidden="true">VEH</span>
+                            <div>
+                                <h4>Vehicular Systems &amp; Metal Fab</h4>
+                                <p>No Prereq &middot; Grades 10&ndash;12</p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="morning.html" style="--chip: var(--pw-med);">
+                            <span class="dropdown-abbr" aria-hidden="true">TMS</span>
+                            <div>
+                                <h4>The Morning Show</h4>
+                                <p>No Prereq &middot; Grades 9&ndash;12</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Sticky strip linking the 7 course pages; scrolls sideways
+         on phones instead of wrapping (style.css Section 7) -->
+    <nav class="course-strip" aria-label="Courses">
+        <div class="container course-strip-inner">
+            <a class="strip-link" href="ied.html">IED</a>
+            <a class="strip-link active" href="poe.html" aria-current="page">POE</a>
+            <a class="strip-link" href="capstone.html">Capstone</a>
+            <a class="strip-link" href="apcsp.html">AP CSP</a>
+            <a class="strip-link" href="apcyber.html">AP Cyber</a>
+            <a class="strip-link" href="vehicular.html">Vehicular</a>
+            <a class="strip-link" href="morning.html">Morning Show</a>
+        </div>
+    </nav>
+
+    <!-- ════════════════════════════════════════════════════════════
+         BLUEPRINT RAIL — the course pages' SVG scroll feature
+         • A faint dashed guide line sits underneath; the solid gold
+           line on top "draws itself" as you scroll (script.js S.2c
+           animates its stroke-dashoffset), and the round node rides
+           down the line at the same scroll percentage.
+         • Decorative only: aria-hidden, pointer-events disabled in
+           CSS, hidden on narrow screens + for reduced motion.
+         ════════════════════════════════════════════════════════════ -->
+    <svg class="course-rail" viewBox="0 0 24 340" aria-hidden="true" focusable="false">
+        <!-- dashed guide (always visible, very faint) -->
+        <path d="M12 14 V326" fill="none" stroke="rgba(212, 168, 67, 0.25)" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"></path>
+        <!-- the line that draws with scroll -->
+        <path class="rail-draw" d="M12 14 V326" fill="none" stroke="#d4a843" stroke-width="2" stroke-linecap="round"></path>
+        <!-- ring marking the start of the line -->
+        <circle cx="12" cy="14" r="7" fill="none" stroke="rgba(212, 168, 67, 0.4)" stroke-width="1.5"></circle>
+        <!-- traveling node (script.js moves cy from 14 → 326) -->
+        <circle class="rail-node" cx="12" cy="14" r="4" fill="#d4a843"></circle>
+    </svg>
+
+    <main id="main">
+
+        <!-- ════════════════════════════════════════════════════════
+             COURSE HEADER — flags, title, and the key-facts strip
+             ════════════════════════════════════════════════════════ -->
+        <header class="page-header blueprint">
+            <div class="container" data-reveal>
+                <div class="course-flags">
+                    <span class="flag flag-pltw">PLTW</span>
+                    <span class="flag flag-honors">Honors</span>
+                </div>
+                <h1>Honors Principles of Engineering</h1>
+                <p class="page-sub">The engineering survey course &mdash; mechanics, circuits, robotics, and the working habits of real engineers.</p>
+
+                <div class="course-meta">
+                    <div class="meta-item">
+                        <span>Grades</span>
+                        <strong>10&ndash;12</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span>Credits</span>
+                        <strong>5</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span>Length</span>
+                        <strong>Full Year</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span>Prerequisite</span>
+                        <strong>IED + Algebra&nbsp;I</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span>Pathway</span>
+                        <strong>PLTW Engineering</strong>
                     </div>
                 </div>
             </div>
+        </header>
+
+        <!-- ════════════════════════════════════════════════════════
+             PHOTO CAROUSEL + COURSE DESCRIPTION
+             • The carousel reuses the hero engine: same .hero-track /
+               .hero-slide classes inside a .course-carousel frame, so
+               one piece of JavaScript runs every carousel on the site.
+
+             📷 SWAPPING IN REAL PHOTOS (see IMAGE-GUIDE.md):
+             • Each <img> points at images/placeholder.jpg — drop a
+               real photo in /images and change ONLY that slide's src.
+             ════════════════════════════════════════════════════════ -->
+        <section class="course-main">
+            <div class="container course-grid">
+
+                <div data-reveal>
+                    <div class="course-carousel" data-carousel>
+                        <div class="hero-track">
+                            <!-- Slide 1 · swap src → a robotics build session -->
+                            <figure class="hero-slide">
+                                <img src="images/placeholder.jpg" alt="Students assembling a VEX robotics mechanism">
+                                <figcaption class="slide-caption">VEX Robotics Build</figcaption>
+                            </figure>
+                            <!-- Slide 2 · swap src → the circuits lab -->
+                            <figure class="hero-slide">
+                                <img src="images/placeholder.jpg" loading="lazy" alt="Breadboard circuit lab with LEDs and multimeter">
+                                <figcaption class="slide-caption">Circuits &amp;amp; Ohm's Law Lab</figcaption>
+                            </figure>
+                            <!-- Slide 3 · swap src → bridge load testing -->
+                            <figure class="hero-slide">
+                                <img src="images/placeholder.jpg" loading="lazy" alt="Model bridge under load during strength testing">
+                                <figcaption class="slide-caption">Bridge Load Testing</figcaption>
+                            </figure>
+                            <!-- Slide 4 · swap src → machine control programming -->
+                            <figure class="hero-slide">
+                                <img src="images/placeholder.jpg" loading="lazy" alt="Student programming an automated machine control system">
+                                <figcaption class="slide-caption">Machine Control Systems</figcaption>
+                            </figure>
+                        </div>
+                        <button class="carousel-btn carousel-prev" type="button" aria-label="Previous slide">&lsaquo;</button>
+                        <button class="carousel-btn carousel-next" type="button" aria-label="Next slide">&rsaquo;</button>
+                    </div>
+                    <!-- Dots are generated by script.js -->
+                    <div class="carousel-dots" aria-label="Choose slide"></div>
+                </div>
+
+                <div class="course-copy" data-reveal>
+                    <h2>About the Course</h2>
+                        <p>Honors Principles of Engineering (PLTW-POE) is an advanced high school survey course that introduces students to foundational engineering principles while preparing them for postsecondary engineering study. Through rigorous activity-, project-, and problem-based (APPB) learning, students apply engineering and scientific concepts to complex, real-world challenges, developing advanced problem-solving, critical thinking, and collaboration skills. Students are expected to document their work thoroughly, analyze results, and communicate solutions effectively to both peers and professional audiences.</p>
+                        <p>As the second of three foundation courses in the PLTW high school Engineering Program, this honors-level course builds on Introduction to Engineering Design (PLTW-IED) while extending knowledge and skills in mathematics, science, and technology. Honors students are expected to engage in higher-level analysis, independent research, and creative design work. A grade of 80 or higher in IED and enrollment in Algebra I are recommended.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════
+             BENEFITS + REQUIREMENTS — required side-by-side layout
+             (style.css Section 20; they stack only below 760px)
+             ════════════════════════════════════════════════════════ -->
+        <section class="course-block">
+            <div class="container duo-grid" data-reveal>
+
+                <div class="panel">
+                    <h3 class="block-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 12.5l2.5 2.5 5-6"></path></svg>
+                        Why Take POE
+                    </h3>
+                    <ul class="benefit-list">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"></path></svg>
+                                <span>Survey every major engineering field &mdash; mechanical, electrical, civil &mdash; before you ever pick a college major.</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"></path></svg>
+                                <span>Build and program robotics mechanisms, circuits, and machine control systems in hands-on labs.</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"></path></svg>
+                                <span>Apply real math and physics &mdash; statics, Ohm&rsquo;s law, energy, and kinematics &mdash; to actual hardware.</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"></path></svg>
+                                <span>Earn honors-level GPA weight while working through a nationally recognized PLTW curriculum.</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"></path></svg>
+                                <span>PLTW coursework can earn <a href="https://www.pltw.org/industry-recognized-credentials" target="_blank" rel="noopener">industry-recognized credentials</a> and college opportunities through <a href="https://www.pltw.org/ace" target="_blank" rel="noopener">PLTW ACE</a> partner schools.</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"></path></svg>
+                                <span>Practice professional engineering documentation and present solutions to real audiences.</span>
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="panel">
+                    <h3 class="block-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 4.5V3h6v1.5M9 10h6M9 14h6M9 18h4"></path></svg>
+                        Requirements &amp; Logistics
+                    </h3>
+                    <dl class="req-list">
+                            <div>
+                                <dt>Grades</dt>
+                                <dd>10&ndash;12</dd>
+                            </div>
+                            <div>
+                                <dt>Credits</dt>
+                                <dd>5 (Full Year)</dd>
+                            </div>
+                            <div>
+                                <dt>Prerequisite</dt>
+                                <dd>Currently enrolled in or completed Introduction to Engineering Design and Algebra&nbsp;I</dd>
+                            </div>
+                            <div>
+                                <dt>Recommended</dt>
+                                <dd>A grade of 80 or higher in IED</dd>
+                            </div>
+                            <div>
+                                <dt>Level</dt>
+                                <dd>Honors &middot; PLTW core course</dd>
+                            </div>
+                            <div>
+                                <dt>Next Course</dt>
+                                <dd>Honors Engineering Capstone</dd>
+                            </div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════
+             INSTRUCTORS
+             • Grid uses repeat(auto-fit, minmax(200px, 1fr)) and email
+               links get word-break: break-all — both required rules so
+               cards never overflow at any width (style.css Section 21).
+             ✉ Short-format emails — verify the district's format with
+               Ms. G before publishing (see note in about.html).
+             ════════════════════════════════════════════════════════ -->
+        <section class="course-block">
+            <div class="container" data-reveal>
+                <h3 class="block-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"></circle><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"></path></svg>
+                    Your Instructors
+                </h3>
+                <div class="teacher-grid">
+                    <div class="teacher-card">
+                        <span class="teacher-avatar" aria-hidden="true">
+                            <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#8b5cf6"></circle><text x="24" y="30" text-anchor="middle" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="16" font-weight="700" fill="#ffffff">VG</text></svg>
+                        </span>
+                        <div>
+                            <h4>Vanitha Gaurishanker</h4>
+                            <span>Teacher of Engineering / Tech Ed.</span>
+                            <a href="mailto:vgaurish@monroe.k12.nj.us">vgaurish@monroe.k12.nj.us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════
+             WHAT STUDENTS SAY — snap carousel (style.css Section 9)
+             • Real quotes are preserved word-for-word.
+             ════════════════════════════════════════════════════════ -->
+        <section class="course-block">
+            <div class="container" data-reveal>
+                <h3 class="block-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 14a2 2 0 0 1-2 2H8l-5 5V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    What Students Say
+                </h3>
+
+                <div class="snap-wrap" data-snap data-autoplay="8000" style="margin-top: 1.2rem;">
+                    <div class="snap-row">
+
+                        <article class="mini-testimonial">
+                            <div class="testimonial-top">
+                                <span class="testimonial-avatar" aria-hidden="true">
+                                    <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#8b5cf6"></circle><text x="24" y="30" text-anchor="middle" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="16" font-weight="700" fill="#ffffff">AS</text></svg>
+                                </span>
+                                <div class="testimonial-info">
+                                    <h3>Arjun Sarsam</h3>
+                                    <p class="testimonial-schools">MTHS '27</p>
+                                </div>
+                            </div>
+                            <p class="testimonial-quote">&ldquo;Principles of Engineering gives a comprehensive overview of all the different fields of engineering. Specifically, the activity on traffic engineering caught my interest, it was a field that I wasn't aware existed. However, I learned all the logistics behind traffic engineering. Additionally, the use of engineering notebooks was a good experience on how it is to be an actual engineer and document everything that we did.&rdquo;</p>
+                        </article>
+
+                        <article class="mini-testimonial">
+                            <div class="testimonial-top">
+                                <span class="testimonial-avatar" aria-hidden="true">
+                                    <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#f59e0b"></circle><text x="24" y="30" text-anchor="middle" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="16" font-weight="700" fill="#0c1a2e">JP</text></svg>
+                                </span>
+                                <div class="testimonial-info">
+                                    <h3>Jeremiah Patten</h3>
+                                    <p class="testimonial-schools">MTHS '26</p>
+                                </div>
+                            </div>
+                            <p class="testimonial-quote">&ldquo;From my time taking Principles of Engineering, my knowledge of engineering and its different fields grew exponentially. Although the course covered multiple engineering disciplines, such as civil, electrical, and mechanical, the most impactful activity was the Ohm's law lab. The lab covered the basics of circuits, as the main objective was to power different LEDs. Learning about circuits and electricity through Principles of Engineering has ultimately influenced my decision to major in electrical engineering.&rdquo;</p>
+                        </article>
+
+                        <article class="mini-testimonial">
+                            <div class="testimonial-top">
+                                <span class="testimonial-avatar" aria-hidden="true">
+                                    <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#3b82f6"></circle><text x="24" y="30" text-anchor="middle" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="16" font-weight="700" fill="#ffffff">SP</text></svg>
+                                </span>
+                                <div class="testimonial-info">
+                                    <h3>Srujan Patil</h3>
+                                    <p class="testimonial-schools">MTHS '26 &middot; Purdue '30</p>
+                                </div>
+                            </div>
+                            <p class="testimonial-quote">&ldquo;Taking Principles of Engineering was a proper exploration of the vast disciplines of engineering. From coding robots, building machines, creating circuits, and calculating bridge loads, POE really taught me the basics of engineering as a whole that I believe will help any student who plans to study engineering beyond high school.&rdquo;</p>
+                        </article>
+
+                        <!-- ⚠ Verify: this quote may be cut short — check the original testimonial sheet -->
+                        <article class="mini-testimonial">
+                            <div class="testimonial-top">
+                                <span class="testimonial-avatar" aria-hidden="true">
+                                    <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#22c55e"></circle><text x="24" y="30" text-anchor="middle" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="16" font-weight="700" fill="#0c1a2e">JS</text></svg>
+                                </span>
+                                <div class="testimonial-info">
+                                    <h3>Jia Shibi</h3>
+                                    <p class="testimonial-schools">MTHS '26 &middot; Rutgers '30</p>
+                                </div>
+                            </div>
+                            <p class="testimonial-quote">&ldquo;Principles of Engineering is the class where my passion for engineering truly took shape.&rdquo;</p>
+                        </article>
+                    </div>
+                    <button class="snap-btn snap-prev" data-snap-prev type="button" aria-label="Previous testimonials">&lsaquo;</button>
+                    <button class="snap-btn snap-next" data-snap-next type="button" aria-label="More testimonials">&rsaquo;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════
+             COURSE HIGHLIGHTS — narrower snap cards (--card-w override)
+             ════════════════════════════════════════════════════════ -->
+        <section class="course-block">
+            <div class="container" data-reveal>
+                <h3 class="block-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.5 5.6 6.1.6-4.6 4.1 1.3 6L12 16.2 6.7 19.3l1.3-6-4.6-4.1 6.1-.6L12 3z"></path></svg>
+                    Course Highlights
+                </h3>
+
+                <div class="snap-wrap" data-snap data-autoplay="7000" style="margin-top: 1.2rem;">
+                    <div class="snap-row" style="--card-w: 19rem;">
+                        <article class="highlight-card">
+                            <h4>Robotics &amp;amp; Automation Labs</h4>
+                            <p>Design, build, and program working mechanisms with the department's VEX robotics platform.</p>
+                            <span class="highlight-tag">Hands-On</span>
+                        </article>
+                        <article class="highlight-card">
+                            <h4>Circuits &amp;amp; Electronics Bench</h4>
+                            <p>Breadboards, multimeters, and the famous Ohm's-law LED lab &amp;mdash; learn electricity by wiring it.</p>
+                            <span class="highlight-tag">Facility</span>
+                        </article>
+                        <article class="highlight-card">
+                            <h4>Engineering Notebook Practice</h4>
+                            <p>Document every project the way working engineers do &amp;mdash; a habit colleges and employers notice.</p>
+                            <span class="highlight-tag">Professional Skill</span>
+                        </article>
+                        <article class="highlight-card">
+                            <h4>Honors Weight + PLTW Credential</h4>
+                            <p>Honors GPA credit and PLTW's industry-recognized credential, in the same course.</p>
+                            <span class="highlight-tag">Academic</span>
+                        </article>
+                    </div>
+                    <button class="snap-btn snap-prev" data-snap-prev type="button" aria-label="Previous highlights">&lsaquo;</button>
+                    <button class="snap-btn snap-next" data-snap-next type="button" aria-label="More highlights">&rsaquo;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hop between course pages without opening the dropdown -->
+        <div class="container course-pager">
+            <a class="pager-link" href="ied.html" data-reveal>
+                <span>&larr; Previous course</span>
+                <strong>Intro to Engineering Design</strong>
+            </a>
+            <a class="pager-link pager-next" href="capstone.html" data-reveal>
+                <span>Next course &rarr;</span>
+                <strong>Engineering Capstone</strong>
+            </a>
         </div>
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-    </div></nav>
+    </main>
 
-    <nav class="course-nav"><div class="course-nav-inner">
-        <a href="ied.html" class="course-nav-link">IED</a>
-        <a href="poe.html" class="course-nav-link active">POE</a>
-        <a href="capstone.html" class="course-nav-link">PLTW Capstone</a>
-        <a href="apcsp.html" class="course-nav-link">AP CSP</a>
-        <a href="apcyber.html" class="course-nav-link">AP Cybersecurity</a>
-        <a href="vehicular.html" class="course-nav-link">Vehicular Systems</a>
-        <a href="morning.html" class="course-nav-link">The Morning Show</a>
-    </div></nav>
-
-    <section class="course-section">
+    <!-- ════════════════════════════════════════════════════════════
+         FOOTER  (shared block — keep in sync across all pages)
+         ════════════════════════════════════════════════════════════ -->
+    <footer class="site-footer">
         <div class="container">
-            <div class="course-header">
-                <h2>Honors Principles of Engineering (POE)</h2>
-                <p class="course-subtitle">An advanced honors survey of engineering — from thermodynamics to robotics and mechanisms.</p>
-                <div class="cc-flags"><span class="flag flag-pltw">PLTW</span><span class="flag flag-honors">Honors</span></div>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a class="brand" href="index.html" aria-label="MTHS Industrial Arts Department — home">
+                        <svg class="brand-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="3.4"></circle>
+                            <circle cx="12" cy="12" r="7"></circle>
+                            <path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"></path>
+                        </svg>
+                        <span class="brand-text">
+                            <span class="brand-top">MTHS</span>
+                            <span class="brand-sub">Industrial Arts Department</span>
+                        </span>
+                    </a>
+                    <p>Hands-on engineering, computer science, skilled trades, and media production at Monroe Township High School.</p>
+                </div>
+
+                <div>
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About the Department</a></li>
+                        <li><a href="about.html#classes">Build Your Track</a></li>
+                        <li><a href="about.html#faculty">Our Faculty</a></li>
+                        <li><a href="about.html#clubs">Clubs &amp; Activities</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://mths.monroe.k12.nj.us" target="_blank" rel="noopener">MTHS Main Site</a></li>
+                        <li><a href="https://www.pltw.org" target="_blank" rel="noopener">Project Lead The Way</a></li>
+                        <li><a href="https://sites.google.com/monroe.k12.nj.us/mths-robotics-club/home" target="_blank" rel="noopener">Robotics Club</a></li>
+                        <li><a href="https://sites.google.com/students.monroe.k12.nj.us/pltwstemnight/home" target="_blank" rel="noopener">PLTW STEM Night</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="course-grid">
-                <div>
-                    <div class="course-carousel-wrap" data-course-carousel>
-                        <div class="course-carousel-track">
-                            <div class="course-carousel-slide"><div class="course-slide-placeholder"><div class="slide-num">01</div>Replace with photo</div><div class="course-carousel-caption">Robotics programming</div></div>
-                            <div class="course-carousel-slide"><div class="course-slide-placeholder"><div class="slide-num">02</div>Replace with photo</div><div class="course-carousel-caption">Circuit board assembly</div></div>
-                            <div class="course-carousel-slide"><div class="course-slide-placeholder"><div class="slide-num">03</div>Replace with photo</div><div class="course-carousel-caption">Structural load testing</div></div>
-                            <div class="course-carousel-slide"><div class="course-slide-placeholder"><div class="slide-num">04</div>Replace with photo</div><div class="course-carousel-caption">Thermodynamics experiment</div></div>
-                            <div class="course-carousel-slide"><div class="course-slide-placeholder"><div class="slide-num">05</div>Replace with photo</div><div class="course-carousel-caption">Mechanisms design</div></div>
-                            <div class="course-carousel-slide"><div class="course-slide-placeholder"><div class="slide-num">06</div>Replace with photo</div><div class="course-carousel-caption">Team project build</div></div>
-                            <div class="course-carousel-slide"><div class="course-slide-placeholder"><div class="slide-num">07</div>Replace with photo</div><div class="course-carousel-caption">Energy conversion lab</div></div>
-                            <div class="course-carousel-slide"><div class="course-slide-placeholder"><div class="slide-num">08</div>Replace with photo</div><div class="course-carousel-caption">Technical analysis</div></div>
-                            <div class="course-carousel-slide"><div class="course-slide-placeholder"><div class="slide-num">09</div>Replace with photo</div><div class="course-carousel-caption">Statics problem solving</div></div>
-                            <div class="course-carousel-slide"><div class="course-slide-placeholder"><div class="slide-num">10</div>Replace with photo</div><div class="course-carousel-caption">Engineering presentation</div></div>
-                            <div class="course-carousel-slide"><div class="course-slide-placeholder"><div class="slide-num">11</div>Replace with photo</div><div class="course-carousel-caption">Material stress testing</div></div>
-                            <div class="course-carousel-slide"><div class="course-slide-placeholder"><div class="slide-num">12</div>Replace with photo</div><div class="course-carousel-caption">Control systems wiring</div></div>
-                        </div>
-                        <button class="course-carousel-btn course-carousel-prev" aria-label="Previous">&#8249;</button>
-                        <button class="course-carousel-btn course-carousel-next" aria-label="Next">&#8250;</button>
-                    </div>
-                    <div class="course-carousel-dots"></div>
-                </div>
-                <div>
-                    <div class="course-detail-block">
-                        <h3><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--gold)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Course Description</h3>
-                        <p>Honors Principles of Engineering is the second course in the PLTW sequence. This rigorous honors-level course explores multiple engineering disciplines through activity-, project-, and problem-based learning. Students investigate mechanisms, energy, statics, materials science, and control systems.</p>
-                    </div>
-                </div>
-                <div class="course-grid-full">
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;">
-                        <div class="course-detail-block">
-                            <h3><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--accent-green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Class Benefits</h3>
-                            <ul><li>Explore mechanical, electrical, and civil engineering disciplines</li><li>Apply physics and calculus to real engineering challenges</li><li>Build and program functional robots and automated systems</li><li>Develop advanced problem-solving and analytical thinking</li><li>Prepare for the PLTW Capstone and college engineering</li></ul>
-                        </div>
-                        <div class="course-detail-block">
-                            <h3><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--accent-blue)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg> Requirements</h3>
-                            <ul><li>Open to Grades 10-12</li><li>5 Credits (full year)</li><li>Prerequisite: IED + Algebra I (80+ recommended)</li><li>PLTW Certified &middot; Honors weighted</li></ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-grid-full">
-                    <div class="course-detail-block">
-                        <h3><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--accent-purple)" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Instructor(s)</h3>
-                        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
-                            <div class="course-teacher">
-                                <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="23" fill="var(--navy-light)" stroke="var(--accent-purple)" stroke-width="2"/><text x="25" y="30" text-anchor="middle" font-size="14" font-family="Barlow Condensed" font-weight="600" fill="var(--accent-purple)">VG</text></svg>
-                                <div><h4>Vanitha Gaurishanker</h4><span>Teacher of Engineering/Tech Ed.</span><br><a href="mailto:vgaurish@monroe.k12.nj.us">vgaurish@monroe.k12.nj.us</a></div>
-                            </div>
-                            <!-- <div class="course-teacher">
-                                <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="23" fill="var(--navy-light)" stroke="var(--gray-400)" stroke-width="2"/><text x="25" y="30" text-anchor="middle" font-size="14" font-family="Barlow Condensed" font-weight="600" fill="var(--gray-400)">?</text></svg>
-                                <div><h4>Teacher TBD</h4><span>Department of Engineering</span><br><a href="mailto:TBD@monroe.k12.nj.us">TBD@monroe.k12.nj.us</a></div>
-                            </div>
-                            <div class="course-teacher">
-                                <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="23" fill="var(--navy-light)" stroke="var(--gray-400)" stroke-width="2"/><text x="25" y="30" text-anchor="middle" font-size="14" font-family="Barlow Condensed" font-weight="600" fill="var(--gray-400)">?</text></svg>
-                                <div><h4>Teacher TBD</h4><span>Department of Engineering</span><br><a href="mailto:TBD@monroe.k12.nj.us">TBD@monroe.k12.nj.us</a></div>
-                            </div> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="course-grid-full">
-                    <div class="course-detail-block">
-                        <h3><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> What Students Say</h3>
-                        <div class="course-testimonials-wrap">
-                            <div class="course-testimonials-track-outer">
-                                <div class="course-testimonials-track" data-mini-carousel="5000">
-                                    <div class="course-testimonial-card"><div class="testimonial-top"><div class="testimonial-avatar"><svg viewBox="0 0 44 44" width="44" height="44"><circle cx="22" cy="22" r="21" fill="var(--navy-light)" stroke="#3b82f6" stroke-width="1.5"/><text x="22" y="27" text-anchor="middle" font-size="12" font-family="Barlow Condensed" font-weight="600" fill="#3b82f6">AJ</text></svg></div><div class="testimonial-info"><h3>Arjun Sarsam</h3><span class="testimonial-schools">MTHS '27</span></div></div><p class="testimonial-quote">Principles of Engineering gives a comprehensive overview of all the different fields of engineering. Specifically, the activity on traffic engineering caught my interest, it was a field that I wasn’t aware existed. However, I learned all the logistics behind traffic engineering. Additionally, the use of engineering notebooks was a good experience on how it is to be an actual engineer and document everything that we did.</p></div>
-                                    <div class="course-testimonial-card"><div class="testimonial-top"><div class="testimonial-avatar"><svg viewBox="0 0 44 44" width="44" height="44"><circle cx="22" cy="22" r="21" fill="var(--navy-light)" stroke="#ef4444" stroke-width="1.5"/><text x="22" y="27" text-anchor="middle" font-size="12" font-family="Barlow Condensed" font-weight="600" fill="#ef4444">JP</text></svg></div><div class="testimonial-info"><h3>Jeremiah Patten</h3><span class="testimonial-schools">MTHS '26</span></div></div><p class="testimonial-quote">From my time taking Principles of Engineering, my knowledge of engineering and its different fields grew exponentially. Although the course covered multiple engineering disciplines, such as civil, electrical, and mechanical, the most impactful activity was the Ohm’s law lab. The lab covered the basics of circuits, as the main objective was to power different LEDs. Learning about circuits and electricity through Principles of Engineering has ultimately influenced my decision to major in electrical engineering.</p></div>
-                                    <div class="course-testimonial-card"><div class="testimonial-top"><div class="testimonial-avatar"><svg viewBox="0 0 44 44" width="44" height="44"><circle cx="22" cy="22" r="21" fill="var(--navy-light)" stroke="#22c55e" stroke-width="1.5"/><text x="22" y="27" text-anchor="middle" font-size="12" font-family="Barlow Condensed" font-weight="600" fill="#22c55e">SP</text></svg></div><div class="testimonial-info"><h3>Srujan Patil</h3><span class="testimonial-schools">MTHS '26 &middot; Purdue '30</span></div></div><p class="testimonial-quote">Taking Principles of Engineering was a proper exploration of the vast disciplines of engineering. From coding robots, building machines, creating circuits, and calculating bridge loads, POE really taught me the basics of engineering as a whole that I believe will help any student who plans to study engineering beyond high school.</p></div>
-                                    <div class="course-testimonial-card"><div class="testimonial-top"><div class="testimonial-avatar"><svg viewBox="0 0 44 44" width="44" height="44"><circle cx="22" cy="22" r="21" fill="var(--navy-light)" stroke="#22c55e" stroke-width="1.5"/><text x="22" y="27" text-anchor="middle" font-size="12" font-family="Barlow Condensed" font-weight="600" fill="#22c55e">JS</text></svg></div><div class="testimonial-info"><h3>Jia Shibi</h3><span class="testimonial-schools">MTHS '26 &middot; Rutgers '30</span></div></div><p class="testimonial-quote">Principles of Engineering is the class where my passion for engineering truly took shape. Through learning physics, building circuits, and building carnival style games for the end of year project, POE introduces different avenues of engineering in a tangible, fun and easy to understand way.</p></div>
-                                </div>
-                            </div>
-                            <button class="events-btn events-prev" data-mini-prev aria-label="Previous">&#8249;</button>
-                            <button class="events-btn events-next" data-mini-next aria-label="Next">&#8250;</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-grid-full">
-                    <div class="course-detail-block">
-                        <h3><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--accent-orange)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Course Highlights</h3>
-                        <div class="course-highlights-wrap">
-                            <div class="course-highlights-outer">
-                                <div class="course-highlights-track" data-mini-carousel="5000">
-                                    <div class="course-highlight-card"><h4>VEX Robotics Integration</h4><p>Students design and program VEX robots, competing in class tournaments.</p><span class="course-highlight-tag">Project</span></div>
-                                    <div class="course-highlight-card"><h4>Rube Goldberg Challenge</h4><p>Teams build chain-reaction machines demonstrating physics principles.</p><span class="course-highlight-tag">Competition</span></div>
-                                    <div class="course-highlight-card"><h4>Industry Speaker Series</h4><p>Professional engineers review student projects and share career insights.</p><span class="course-highlight-tag">Event</span></div>
-                                </div>
-                            </div>
-                            <button class="events-btn events-prev" data-mini-prev aria-label="Previous">&#8249;</button>
-                            <button class="events-btn events-next" data-mini-next aria-label="Next">&#8250;</button>
-                        </div>
-                    </div>
-                </div>
+
+            <div class="footer-bottom">
+                <span>&copy; <span data-year>2026</span> MTHS Industrial Arts Department &middot; Monroe Township High School</span>
+                <span>Built by MTHS students, for MTHS students.</span>
             </div>
         </div>
-    </section>
+    </footer>
 
-    <footer class="site-footer"><div class="container"><div class="footer-inner">
-        <div class="footer-brand"><svg viewBox="0 0 40 40" width="26" height="26"><path d="M20 2l2.5 5.5 5.5-2.5-2 5.5L32 13l-5.5 2.5L29 21l-5.5-2.5L20 24l-2.5-5.5L12 21l2-5.5L8 13l5.5-2.5L11 5l5.5 2.5z" fill="#d4a843"/><circle cx="20" cy="13" r="5" fill="#0c1a2e" stroke="#d4a843" stroke-width="1"/></svg><span>MTHS Industrial Arts Department</span></div>
-        <div class="footer-links"><a href="index.html">Home</a><a href="about.html">About Us</a></div>
-        <p class="footer-copy">&copy; 2026 Monroe Township High School &middot; Industrial Arts Department</p>
-    </div></div></footer>
-    <script src="script.js"></script>
 </body>
 </html>
